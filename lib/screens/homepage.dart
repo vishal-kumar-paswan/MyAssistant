@@ -1,4 +1,5 @@
 import 'package:assistant/utils/assistant_operations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,7 +25,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   @override
   void initState() {
     super.initState();
-    permissionRequests();
+
     _initSpeech();
   }
 
@@ -66,6 +67,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
       Permission.camera,
       Permission.contacts,
       Permission.microphone,
+      Permission.sms,
+      Permission.phone,
+      Permission.accessNotificationPolicy,
     ].request();
   }
 
@@ -73,64 +77,89 @@ class _HomepageScreenState extends State<HomepageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           "MyAssistant",
           style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.w300,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
         elevation: 0.0,
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xff050208),
       ),
-      body: SizedBox(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 13, 4, 44),
+            ],
+          ),
+        ),
         height: double.infinity,
         width: double.infinity,
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                _lastWords,
-                style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w300,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Text(
+                  _lastWords,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ]),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  // Icon(CupertinoIcons.settings),
+                  // Icon(
+                  //   CupertinoIcons.moon,
+                  // )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
-      floatingActionButton: SizedBox(
-        height: 70,
-        width: 70,
-        child: FloatingActionButton(
-          onPressed: () {
-            _micActivity();
-            _startListening();
-            _micActivity();
-          },
-          child: AvatarGlow(
-            animate: isMicActive,
-            endRadius: 150,
-            duration: const Duration(seconds: 1),
-            glowColor: Colors.redAccent,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.redAccent,
-              ),
-              width: 90,
-              height: 90,
-              child: Icon(
-                isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
-                size: 30,
-                color: Colors.white,
-              ),
+      floatingActionButton: InkWell(
+        onTap: () {
+          _micActivity();
+          _startListening();
+          _micActivity();
+        },
+        child: AvatarGlow(
+          animate: isMicActive,
+          endRadius: 150,
+          duration: const Duration(seconds: 1),
+          glowColor: const Color.fromARGB(255, 2, 80, 215),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: Colors.redAccent,
+            ),
+            width: 75,
+            height: 75,
+            child: Icon(
+              isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
+              size: 26,
+              color: Colors.white,
             ),
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

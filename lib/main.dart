@@ -1,12 +1,14 @@
 // ignore_for_file: avoid_print
+import 'package:assistant/screens/notes_section/note_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/permission_requests.dart';
 import '../screens/camera.dart';
 import '../screens/homepage.dart';
-import '../screens/login.dart';
-import '../screens/signup.dart';
+import 'screens/login_and_signup/login.dart';
+import 'screens/login_and_signup/signup.dart';
+import 'screens/reminders_section/reminders.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,16 +24,18 @@ class Assistant extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: GoogleFonts.lato().fontFamily,
+        fontFamily: GoogleFonts.nunito().fontFamily,
       ),
       routes: {
-        '/': (context) => HomepageScreen(),
+        '/': (context) => const HomepageScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignupScreen(),
-        '/homepage': (context) => HomepageScreen(),
+        '/homepage': (context) => const HomepageScreen(),
         '/camera': (context) => const CameraScreen(),
+        '/notesSection': (context) => const NotesSection(),
+        '/remindersSection': (context) => const ReminderSection()
       },
-      initialRoute: '/homepage',
+      initialRoute: '/login',
     );
   }
 }

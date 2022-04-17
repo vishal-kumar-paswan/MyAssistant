@@ -1,4 +1,4 @@
-import 'package:assistant/screens/signup.dart';
+import 'package:assistant/screens/login_and_signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -13,30 +13,45 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color(0xff3C2692),
+        color: const Color.fromARGB(255, 25, 8, 86),
         child: Column(
           children: [
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
-                  color: Color(0xff3C2692),
+                  color: Color.fromARGB(255, 25, 8, 86),
                 ),
                 child: Center(
-                  child: AnimatedTextKit(
-                    repeatForever: true,
-                    animatedTexts: [
-                      TypewriterAnimatedText(
-                        'MyAssistant',
-                        textStyle: const TextStyle(
-                          fontSize: 30,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AnimatedTextKit(
+                        repeatForever: true,
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            'MyAssistant',
+                            textStyle: const TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                            ),
+                            speed: const Duration(
+                              milliseconds: 200,
+                            ),
+                          ),
+                        ],
+                        isRepeatingAnimation: true,
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      const Text(
+                        'Makes your life simple.',
+                        style: TextStyle(
+                          fontSize: 13,
                           color: Colors.white,
                         ),
-                        speed: const Duration(
-                          milliseconds: 200,
-                        ),
-                      ),
+                      )
                     ],
-                    isRepeatingAnimation: true,
                   ),
                 ),
               ),
@@ -64,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                         const Text(
                           'Login',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Color.fromARGB(255, 25, 8, 86),
                             fontWeight: FontWeight.w600,
                             fontSize: 30.0,
                           ),
@@ -76,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                           decoration: const InputDecoration(
                             icon: Icon(
                               CupertinoIcons.at,
-                              color: Color(0xff3C2692),
+                              color: Color.fromARGB(255, 25, 8, 86),
                             ),
                             hintText: 'Username',
                           ),
@@ -95,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                           decoration: const InputDecoration(
                             icon: Icon(
                               CupertinoIcons.lock_fill,
-                              color: Color(0xff3C2692),
+                              color: Color.fromARGB(255, 25, 8, 86),
                             ),
                             hintText: 'Password',
                           ),
@@ -141,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
-                                color: const Color(0xff3C2692),
+                                color: const Color.fromARGB(255, 27, 3, 115),
                               ),
                             ),
                           ),
