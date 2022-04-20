@@ -6,6 +6,10 @@ class PermissionRequests {
       Permission.camera,
       Permission.contacts,
       Permission.microphone,
+      Permission.sms,
+      Permission.phone,
+      Permission.location,
+      // Permission.accessNotificationPolicy,
     ].request();
   }
 }

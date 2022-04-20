@@ -48,17 +48,19 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         // enabledBorder: UnderlineInputBorder(
                         //   borderSide: BorderSide(
                         //     color: Colors.white,
                         //   ),
                         // ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
-                        ),
+                        // focusedBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.person,
                           color: Colors.white,
@@ -75,17 +77,19 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         // enabledBorder: UnderlineInputBorder(
                         //   borderSide: BorderSide(
                         //     color: Colors.white,
                         //   ),
                         // ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
-                        ),
+                        // focusedBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.mail,
                           color: Colors.white,
@@ -102,17 +106,19 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         // enabledBorder: UnderlineInputBorder(
                         //   borderSide: BorderSide(
                         //     color: Colors.white,
                         //   ),
                         // ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
-                        ),
+                        // focusedBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.at,
                           color: Colors.white,
@@ -130,17 +136,19 @@ class SignupScreen extends StatelessWidget {
                     ),
                     TextFormField(
                       obscureText: true,
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         // enabledBorder: UnderlineInputBorder(
                         //   borderSide: BorderSide(
                         //     color: Colors.white,
                         //   ),
                         // ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
-                        ),
+                        // focusedBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.lock_fill,
                           color: Colors.white,

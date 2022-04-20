@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
-import 'package:assistant/screens/notes_section/note_list.dart';
+
+import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,7 @@ import '../screens/camera.dart';
 import '../screens/homepage.dart';
 import 'screens/login_and_signup/login.dart';
 import 'screens/login_and_signup/signup.dart';
+import 'screens/notes_section/notes_page.dart';
 import 'screens/reminders_section/reminders.dart';
 
 void main() {
@@ -22,6 +24,7 @@ class Assistant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: NavigationService.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.nunito().fontFamily,

@@ -1,106 +1,106 @@
-import 'dart:io';
+import 'package:assistant/models/notes_section/note.dart';
+import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:async';
-import 'package:path_provider/path_provider.dart';
-import '../models/notes_section/notes.dart';
+// import 'package:sqflite_database_example/model/note.dart';
 
-class DatabaseHelper {
-  static DatabaseHelper? _databaseHelper = null; // Singleton DatabaseHelper
-  static Database? _database = null; // Singleton Database
+class NotesDatabase {
+  static final NotesDatabase instance = NotesDatabase._init();
 
-  String noteTable = 'note_table';
-  String colId = 'id';
-  String colTitle = 'title';
-  String colDescription = 'description';
-  String colDate = 'date';
+  static Database? _database;
 
-  DatabaseHelper._createInstance(); // Named constructor to create instance of DatabaseHelper
-
-  factory DatabaseHelper() {
-    // if (_databaseHelper == null) {
-    return _databaseHelper ??= DatabaseHelper
-        ._createInstance(); // This is executed only once, singleton object
-    // }
-    // return _databaseHelper;
-  }
+  NotesDatabase._init();
 
   Future<Database> get database async {
-    // if (_database == null) {
-    return _database ??= await initializeDatabase();
-    // }
-    // return _database;
+    if (_database != null) return _database!;
+
+    _database = await _initDB('notes_database.db');
+    return _database!;
   }
 
-  Future<Database> initializeDatabase() async {
-    // Get the directory path for both Android and iOS to store database.
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + 'notes.db';
+  Future<Database> _initDB(String filePath) async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, filePath);
 
-    // Open/create the database at a given path
-    var notesDatabase =
-        await openDatabase(path, version: 1, onCreate: _createDb);
-    return notesDatabase;
+    return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  void _createDb(Database db, int newVersion) async {
-    await db.execute(
-        'CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, '
-        '$colDescription TEXT, $colDate TEXT)');
+  Future _createDB(Database db, int version) async {
+    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    const textType = 'TEXT NOT NULL';
+    const boolType = 'BOOLEAN NOT NULL';
+    const integerType = 'INTEGER NOT NULL';
+
+    await db.execute('''
+CREATE TABLE $tableNotes ( 
+  ${NoteFields.id} $idType, 
+  ${NoteFields.isImportant} $boolType,
+  ${NoteFields.number} $integerType,
+  ${NoteFields.title} $textType,
+  ${NoteFields.description} $textType,
+  ${NoteFields.time} $textType
+  )
+''');
   }
 
-  // Fetch Operation: Get all note objects from database
-  Future<List<Map<String, dynamic>>> getNoteMapList() async {
-    Database db = await database;
+  Future<Note> create(Note note) async {
+    final db = await instance.database;
 
-//		var result = await db.rawQuery('SELECT * FROM $noteTable order by $colPriority ASC');
-    var result = await db.query(noteTable, orderBy: '$colDate ASC');
-    return result;
+    final id = await db.insert(tableNotes, note.toJson());
+    return note.copy(id: id);
   }
 
-  // Insert Operation: Insert a Note object to database
-  Future<int> insertNote(Note note) async {
-    Database db = await database;
-    var result = await db.insert(noteTable, note.toMap());
-    return result;
-  }
+  Future<Note> readNote(int id) async {
+    final db = await instance.database;
 
-  // Update Operation: Update a Note object and save it to database
-  Future<int> updateNote(Note note) async {
-    var db = await database;
-    var result = await db.update(noteTable, note.toMap(),
-        where: '$colId = ?', whereArgs: [note.id]);
-    return result;
-  }
+    final maps = await db.query(
+      tableNotes,
+      columns: NoteFields.values,
+      where: '${NoteFields.id} = ?',
+      whereArgs: [id],
+    );
 
-  // Delete Operation: Delete a Note object from database
-  Future<int> deleteNote(int id) async {
-    var db = await database;
-    int result =
-        await db.rawDelete('DELETE FROM $noteTable WHERE $colId = $id');
-    return result;
-  }
-
-  // Get number of Note objects in database
-  Future<int> getCount() async {
-    Database db = await database;
-    List<Map<String, dynamic>> x =
-        await db.rawQuery('SELECT COUNT (*) from $noteTable');
-    int result = Sqflite.firstIntValue(x)!;
-    return result;
-  }
-
-  // Get the 'Map List' [ List<Map> ] and convert it to 'Note List' [ List<Note> ]
-  Future<List<Note>> getNoteList() async {
-    var noteMapList = await getNoteMapList(); // Get 'Map List' from database
-    int count =
-        noteMapList.length; // Count the number of map entries in db table
-
-    List<Note> noteList = [];
-    // For loop to create a 'Note List' from a 'Map List'
-    for (int i = 0; i < count; i++) {
-      noteList.add(Note.fromMapObject(noteMapList[i]));
+    if (maps.isNotEmpty) {
+      return Note.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
     }
+  }
 
-    return noteList;
+  Future<List<Note>> readAllNotes() async {
+    final db = await instance.database;
+
+    const orderBy = '${NoteFields.id} ASC';
+    final result =
+        await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
+    // final result = await db.query(tableNotes, orderBy: orderBy);
+
+    return result.map((json) => Note.fromJson(json)).toList();
+  }
+
+  Future<int> update(Note note) async {
+    final db = await instance.database;
+
+    return db.update(
+      tableNotes,
+      note.toJson(),
+      where: '${NoteFields.id} = ?',
+      whereArgs: [note.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await instance.database;
+
+    return await db.delete(
+      tableNotes,
+      where: '${NoteFields.id} = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future close() async {
+    final db = await instance.database;
+
+    db.close();
   }
 }
