@@ -36,6 +36,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           leading: IconButton(
             icon: const Icon(CupertinoIcons.back, color: Colors.white),
             onPressed: () {},

@@ -1,34 +1,32 @@
 import 'package:assistant/utils/fetch_contact_details.dart';
+import 'package:assistant/utils/text_to_speech.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../models/contact_details.dart';
 
-final FlutterTts flutterTts = FlutterTts();
+// final FlutterTts flutterTts = FlutterTts();
 
-Future speak(String text) async {
-  await flutterTts.setLanguage("en-US");
-  await flutterTts.setPitch(1.0); // 0.5 - 1.5
-  await flutterTts.speak(text);
-}
+// Future speak(String text) async {
+//   await flutterTts.setLanguage("en-US");
+//   await flutterTts.setPitch(1.5); // 0.5 - 1.5
+//   await flutterTts.speak(text);
+// }
 
 class SendSMS {
-  final TextEditingController messageController =
-      TextEditingController();
+  static TextEditingController messageController = TextEditingController();
 
-  String? encodeQueryParameters(Map<String, String> params) {
+  static String? encodeQueryParameters(Map<String, String> params) {
     return params.entries
         .map((e) =>
             '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
         .join('&');
   }
 
-  void sendMessage(BuildContext context, String operation) async {
+  static void sendMessage(BuildContext context, String operation) async {
     String contactName = operation.substring(operation.lastIndexOf(' ') + 1);
     ContactDetails _contactDetails =
-        await FetchContactDetails().getContactNumber(contactName);
+        await FetchContactDetails.getContactNumber(contactName);
 
     if (_contactDetails.isContactFound) {
       showDialog(
@@ -56,6 +54,8 @@ class SendSMS {
             actions: [
               TextButton(
                 onPressed: () async {
+                  TextToSpeechModel.speakText(
+                      'Sending message to ${_contactDetails.contactName}');
                   Uri smsUri = Uri(
                     scheme: 'sms',
                     path: '${(_contactDetails.contactNumber)}',
@@ -73,7 +73,7 @@ class SendSMS {
       );
       return;
     } else if (_contactDetails.isContactFound == false) {
-      speak("Contact not found");
+      TextToSpeechModel.speakText("Contact not found");
     }
   }
 }

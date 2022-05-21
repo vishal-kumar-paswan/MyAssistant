@@ -1,9 +1,60 @@
+// ignore_for_file: avoid_print
+
+import 'package:assistant/screens/homepage.dart';
+import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+Future<dynamic> signUpDetails(
+    String _name, String _email, String _username, String _password) async {
+  String url =
+      'http://ass69.herokuapp.com/signup?email=$_email&password=$_password';
+  final response = await http.post(
+    Uri.parse(url),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  int status = response.statusCode;
+  print("status" + status.toString());
+
+  switch (status) {
+    case 201:
+      Get.to(const HomepageScreen());
+      print('signup success!!');
+      print(response.body);
+      break;
+    case 205:
+      print('check credentials');
+      const snackBar = SnackBar(
+        content: Text('Signup credentials already in use.'),
+      );
+
+      ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
+          .showSnackBar(snackBar);
+      print(response.body);
+      break;
+    default:
+      const snackBar = SnackBar(
+        content: Text('Something went wrong, please try again later.'),
+      );
+      ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
+          .showSnackBar(snackBar);
+      print('something went wrong!!');
+      break;
+  }
+}
+
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  SignupScreen({Key? key}) : super(key: key);
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,24 +99,15 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      controller: _nameController,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                        // enabledBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.person,
                           color: Colors.white,
                         ),
-                        hintText: 'Full name',
+                        hintText: 'Name',
                         hintStyle: TextStyle(color: Colors.white),
                       ),
                       validator: (value) {
@@ -77,18 +119,9 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      controller: _emailController,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                        // enabledBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.mail,
@@ -106,18 +139,9 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      controller: _usernameController,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                        // enabledBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.at,
@@ -135,19 +159,10 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      controller: _passwordController,
                       obscureText: true,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                        // enabledBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.lock_fill,
@@ -173,7 +188,14 @@ class SignupScreen extends StatelessWidget {
                         horizontal: 50.0,
                       ),
                       child: InkWell(
-                        onTap: () => Get.toNamed('/homepage'),
+                        onTap: () {
+                          signUpDetails(
+                            _nameController.text,
+                            _emailController.text,
+                            _usernameController.text,
+                            _passwordController.text,
+                          );
+                        },
                         child: AnimatedContainer(
                           duration: const Duration(seconds: 1),
                           child: const Center(

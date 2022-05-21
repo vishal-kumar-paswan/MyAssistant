@@ -1,11 +1,9 @@
-
-
 import 'package:assistant/models/contact_details.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
 class FetchContactDetails {
-  List<Contact>? contactList;
-  Future<ContactDetails> getContactNumber(String contactName) async {
+  static List<Contact>? contactList;
+  static Future<ContactDetails> getContactNumber(String contactName) async {
     if (await FlutterContacts.requestPermission()) {
       contactList = await FlutterContacts.getContacts(
         sorted: true,
@@ -23,15 +21,8 @@ class FetchContactDetails {
               contactName: contactName,
               contactNumber: contactList![i].phones[0].normalizedNumber);
           return cds;
-          // print('user found!!');
-          // print(contactName +
-          //     " phone number " +
-          //     contactList![i].phones[0].normalizedNumber);
-          // String number = contactList![i].phones[0].normalizedNumber;
-
         }
       }
-      // print(contactList);
     }
     return const ContactDetails(false);
   }

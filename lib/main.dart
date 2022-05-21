@@ -1,11 +1,13 @@
 // ignore_for_file: avoid_print
 
+import 'package:assistant/screens/alarm_section/alarms.dart';
+import 'package:assistant/screens/query_page/query_result.dart';
+import 'package:assistant/screens/share_files_section/share_files.dart';
 import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/permission_requests.dart';
-import '../screens/camera.dart';
 import '../screens/homepage.dart';
 import 'screens/login_and_signup/login.dart';
 import 'screens/login_and_signup/signup.dart';
@@ -31,12 +33,14 @@ class Assistant extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const HomepageScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignupScreen(),
+        '/login': (context) => LoginScreen(),
+        '/signup': (context) => SignupScreen(),
         '/homepage': (context) => const HomepageScreen(),
-        '/camera': (context) => const CameraScreen(),
         '/notesSection': (context) => const NotesSection(),
-        '/remindersSection': (context) => const ReminderSection()
+        '/remindersSection': (context) => const ReminderSection(),
+        'alarmSection': (context) => AlarmClockSection(),
+        '/shareFileSection': (context) => ShareFileSection(),
+        '/querySection': (context) => QuerySection(),
       },
       initialRoute: '/login',
     );

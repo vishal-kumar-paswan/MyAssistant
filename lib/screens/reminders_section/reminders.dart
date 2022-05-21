@@ -1,9 +1,52 @@
+import 'package:assistant/utils/text_to_speech.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+showAlertDialog(BuildContext context, String title, String description) {
+  Widget okButton = TextButton(
+    child: const Text(
+      "OK",
+      style: TextStyle(
+        fontSize: 15,
+      ),
+    ),
+    onPressed: () => Navigator.pop(context),
+  );
+
+  AlertDialog alert = AlertDialog(
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(20.0),
+      ),
+    ),
+    title: Text(
+      title,
+      style: const TextStyle(
+        fontSize: 20,
+      ),
+    ),
+    content: Text(
+      description,
+      style: const TextStyle(
+        fontSize: 15,
+      ),
+    ),
+    actions: [
+      okButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
 class ReminderSection extends StatefulWidget {
   const ReminderSection({Key? key}) : super(key: key);
@@ -14,7 +57,7 @@ class ReminderSection extends StatefulWidget {
 
 class _ReminderSectionState extends State<ReminderSection> {
   late String taskName;
-  late int hr, min;
+  late int hour, minute;
   late String time;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
@@ -27,11 +70,15 @@ class _ReminderSectionState extends State<ReminderSection> {
     super.initState();
     const androidInitialize = AndroidInitializationSettings('flutter');
     const iosinitialize = IOSInitializationSettings();
-    const initializeSettings =
-        InitializationSettings(android: androidInitialize, iOS: iosinitialize);
+    const initializeSettings = InitializationSettings(
+      android: androidInitialize,
+      iOS: iosinitialize,
+    );
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    flutterLocalNotificationsPlugin.initialize(initializeSettings,
-        onSelectNotification: notificationSelected);
+    flutterLocalNotificationsPlugin.initialize(
+      initializeSettings,
+      onSelectNotification: notificationSelected,
+    );
   }
 
   Future _showNotification() async {
@@ -40,7 +87,7 @@ class _ReminderSectionState extends State<ReminderSection> {
         setReminder = false;
       });
       const androidDetails = AndroidNotificationDetails(
-        "Channel ID",
+        "MyAssistant ID",
         "MyAssistant",
         importance: Importance.max,
       );
@@ -58,6 +105,7 @@ class _ReminderSectionState extends State<ReminderSection> {
         scheduledTime,
         generalNotificationDetails,
       );
+      TextToSpeechModel.speakText('Reminder added');
     }
   }
 
@@ -123,10 +171,7 @@ class _ReminderSectionState extends State<ReminderSection> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(CupertinoIcons.chevron_back),
-            onPressed: () => Get.toNamed('/homepage'),
-          ),
+          automaticallyImplyLeading: false,
           title: Text(
             'MyReminders',
             style: TextStyle(

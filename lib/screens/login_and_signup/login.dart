@@ -1,13 +1,57 @@
+import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/screens/login_and_signup/signup.dart';
+import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+Future<dynamic> fetchLoginDetails(String _userId, String _password) async {
+  String url =
+      'http://ass69.herokuapp.com/login?email=$_userId&password=$_password';
+  final response = await http.post(
+    Uri.parse(url),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+  int status = response.statusCode;
+  print("status" + status.toString());
+
+  switch (status) {
+    case 202:
+      Get.to(const HomepageScreen());
+      print('login success!!');
+      print(response.body);
+      break;
+    case 401:
+      const snackBar = SnackBar(
+        content: Text('Invalid login credentials.'),
+      );
+      ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
+          .showSnackBar(snackBar);
+      print('incorrect credentials');
+      print(response.body);
+      break;
+    default:
+      const snackBar = SnackBar(
+        content: Text('Something went wrong, please try again later.'),
+      );
+      ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
+          .showSnackBar(snackBar);
+      print('something went wrong!!');
+      break;
+  }
+}
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
 
   final bool changeButton = false;
+
+  final TextEditingController userIdController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +107,7 @@ class LoginScreen extends StatelessWidget {
                     height: 40.0,
                   ),
                   TextFormField(
+                    controller: userIdController,
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       // enabledBorder: UnderlineInputBorder(
@@ -93,6 +138,7 @@ class LoginScreen extends StatelessWidget {
                     height: 20,
                   ),
                   TextFormField(
+                    controller: passwordController,
                     obscureText: true,
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
@@ -131,26 +177,21 @@ class LoginScreen extends StatelessWidget {
                       horizontal: 70.0,
                     ),
                     child: InkWell(
-                      onTap: () => Get.toNamed('/homepage'),
+                      onTap: () {
+                        fetchLoginDetails(
+                            userIdController.text, passwordController.text);
+                      },
                       child: AnimatedContainer(
                         duration: const Duration(seconds: 1),
-                        child: Center(
-                          child: changeButton
-                              ? const SizedBox(
-                                  height: 25,
-                                  width: 25,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                  ),
-                                ),
+                        child: const Center(
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                         height: 50.0,
                         width: double.infinity,
@@ -174,7 +215,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () => Get.to(const SignupScreen()),
+                        onPressed: () => Get.to(SignupScreen()),
                         child: const Text('Signup'),
                       )
                     ],

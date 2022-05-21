@@ -1,9 +1,10 @@
+import 'package:assistant/utils/text_to_speech.dart';
 import 'package:device_apps/device_apps.dart';
 
-class FetchInstalledAppList {
-  static Future<String?> getPackageName(String appName) async {
+class OpenApplicationSection {
+  static void openApplication(String appName) async {
     late List<Application> installedApps;
-    String? _packageName;
+    late String _packageName = "";
     installedApps =
         await DeviceApps.getInstalledApplications(includeSystemApps: true);
     for (int i = 0; i < installedApps.length; i++) {
@@ -15,7 +16,9 @@ class FetchInstalledAppList {
         break;
       }
     }
-    print('package name : ' + _packageName!);
-    return _packageName;
+
+    _packageName != ""
+        ? await DeviceApps.openApp(_packageName.toString())
+        : TextToSpeechModel.speakText("app is not installed on your phone");
   }
 }
