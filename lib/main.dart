@@ -38,7 +38,7 @@ class Assistant extends StatelessWidget {
         '/homepage': (context) => const HomepageScreen(),
         '/notesSection': (context) => const NotesSection(),
         '/remindersSection': (context) => const ReminderSection(),
-        'alarmSection': (context) => AlarmClockSection(),
+        '/alarmSection': (context) => AlarmClockSection(),
         '/shareFileSection': (context) => ShareFileSection(),
         '/querySection': (context) => QuerySection(),
       },

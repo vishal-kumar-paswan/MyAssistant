@@ -123,10 +123,10 @@ class LoginScreen extends StatelessWidget {
                       // ),
                       border: InputBorder.none,
                       icon: Icon(
-                        CupertinoIcons.at,
+                        CupertinoIcons.mail,
                         color: Colors.white,
                       ),
-                      hintText: 'Username',
+                      hintText: 'Email',
                       hintStyle: TextStyle(color: Colors.white),
                     ),
                     validator: (value) {
@@ -209,7 +209,7 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Don\'t have a account?',
+                        'Don\'t have an account?',
                         style: TextStyle(
                           color: Colors.white,
                         ),

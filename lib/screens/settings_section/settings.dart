@@ -1,3 +1,4 @@
+import 'package:assistant/screens/login_and_signup/login.dart';
 import 'package:assistant/screens/settings_section/about.dart';
 import 'package:assistant/screens/settings_section/development_team.dart';
 import 'package:flutter/cupertino.dart';
@@ -138,7 +139,9 @@ class _SettingsSectionState extends State<SettingsSection> {
                 height: 10,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Get.to(LoginScreen());
+                },
                 child: const Text(
                   'Logout',
                   style: TextStyle(

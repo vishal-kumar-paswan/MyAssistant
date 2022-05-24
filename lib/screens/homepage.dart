@@ -1,6 +1,9 @@
+import 'package:assistant/screens/settings_section/settings.dart';
 import 'package:assistant/utils/assistant_operations.dart';
 import 'package:device_apps/device_apps.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -106,6 +109,16 @@ class _HomepageScreenState extends State<HomepageScreen> {
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: const Color(0xff050208),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(const SettingsSection());
+              },
+              icon: const Icon(
+                CupertinoIcons.settings_solid,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
