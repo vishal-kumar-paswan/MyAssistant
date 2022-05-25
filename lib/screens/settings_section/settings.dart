@@ -57,7 +57,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                     'Temperature Format',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 23,
                     ),
                   ),
                   const Expanded(flex: 1, child: SizedBox()),
@@ -65,7 +65,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                     '°C',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 23,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -87,7 +87,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                     '°F',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 23,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -102,7 +102,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   'How to use?',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -116,7 +116,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   'Development Team',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -130,7 +130,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   'About',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -146,7 +146,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   'Logout',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -160,7 +160,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   'Made with ❤️ using Flutter and Next.js',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 15.5,
                     // fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,

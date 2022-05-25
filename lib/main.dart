@@ -2,6 +2,8 @@
 
 import 'package:assistant/screens/alarm_section/alarms.dart';
 import 'package:assistant/screens/query_page/query_result.dart';
+import 'package:assistant/screens/settings_section/development_team.dart';
+import 'package:assistant/screens/settings_section/how_to_use.dart';
 import 'package:assistant/screens/share_files_section/share_files.dart';
 import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ import 'screens/login_and_signup/login.dart';
 import 'screens/login_and_signup/signup.dart';
 import 'screens/notes_section/notes_page.dart';
 import 'screens/reminders_section/reminders.dart';
+import 'screens/settings_section/about.dart';
+import 'screens/settings_section/settings.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,8 +45,12 @@ class Assistant extends StatelessWidget {
         '/alarmSection': (context) => AlarmClockSection(),
         '/shareFileSection': (context) => ShareFileSection(),
         '/querySection': (context) => QuerySection(),
+        '/settingsSection': (context) => const SettingsSection(),
+        '/developementTeamSection': (context) => const DevelopmentTeamSection(),
+        '/aboutSection': (context) => const AboutSection(),
+        '/howToUseSection': (context) => const HowToUseSection(),
       },
-      initialRoute: '/login',
+      initialRoute: '/howToUseSection',
     );
   }
 }

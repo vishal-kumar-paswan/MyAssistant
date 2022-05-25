@@ -46,9 +46,19 @@ class AboutSection extends StatelessWidget {
               height: 6,
             ),
             const Text(
+              'Makes your life simple.',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
               'Version 1.0',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15,
                 color: Colors.white,
               ),
             )

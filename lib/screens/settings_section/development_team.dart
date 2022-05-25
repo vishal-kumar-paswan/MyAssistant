@@ -40,7 +40,7 @@ class DevelopmentTeamSection extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 60.0,
+              height: 65.0,
             ),
             const Text(
               'Soumyaneel Sarkar',
@@ -55,10 +55,25 @@ class DevelopmentTeamSection extends StatelessWidget {
             ),
             const Text(
               'Department of Computer Science',
-              style: TextStyle(color: Colors.white, fontSize: 15),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(
-              height: 110,
+              height: 8,
+            ),
+            const Text(
+              'Kalyani Mahavidyalaya',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(
+              height: 120,
             ),
             Transform.scale(
               scale: 4,
@@ -67,7 +82,7 @@ class DevelopmentTeamSection extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 60.0,
+              height: 65.0,
             ),
             const Text(
               'Vishal Kumar Paswan',
@@ -83,6 +98,17 @@ class DevelopmentTeamSection extends StatelessWidget {
             const Text(
               'Department of Computer Science',
               style: TextStyle(color: Colors.white, fontSize: 15),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            const Text(
+              'Kalyani Mahavidyalaya',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),
