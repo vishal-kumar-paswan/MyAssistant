@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+import '../../utils/text_to_speech.dart';
+
 Future<dynamic> signUpDetails(
     String _name, String _email, String _username, String _password) async {
   String url =
@@ -24,6 +26,7 @@ Future<dynamic> signUpDetails(
   switch (status) {
     case 201:
       Get.to(const HomepageScreen());
+      TextToSpeechModel.speakText('Welcome to my assistant');
       print('signup success!!');
       print(response.body);
       break;

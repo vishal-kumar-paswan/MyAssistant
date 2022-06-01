@@ -6,7 +6,6 @@ import 'package:assistant/screens/share_files_section/share_files.dart';
 import 'package:assistant/utils/call_section.dart';
 import 'package:assistant/utils/fetch_app_list.dart';
 import 'package:assistant/utils/local_authentication.dart';
-import 'package:assistant/utils/open_application.dart';
 import 'package:assistant/utils/play_music.dart';
 import 'package:assistant/utils/send_sms.dart';
 import 'package:assistant/utils/text_to_speech.dart';
@@ -18,6 +17,12 @@ import 'global_context.dart';
 class AssistantOperations {
   static void selectTask(String operation) async {
 
+    // For greetings
+    if (operation.toLowerCase().compareTo('good morning') == 0) {
+    
+    }
+
+
     // For calling
     if (operation.toLowerCase().startsWith('call')) {
       String contactName = operation.substring(operation.indexOf(' ') + 1);
@@ -28,10 +33,7 @@ class AssistantOperations {
     else if (operation.toLowerCase().startsWith('send a message to')) {
       SendSMS.sendMessage(
           (NavigationService.navigatorKey.currentContext)!, operation);
-    }
-
-    // For sending SMS - 2
-    else if (operation.toLowerCase().startsWith('send message to')) {
+    } else if (operation.toLowerCase().startsWith('send message to')) {
       SendSMS.sendMessage(
           (NavigationService.navigatorKey.currentContext)!, operation);
     }
@@ -53,9 +55,7 @@ class AssistantOperations {
     // Play music
     else if (operation.toLowerCase().compareTo('play music') == 0) {
       MusicSection.playMusic();
-    }
-    // Play music
-    else if (operation.toLowerCase().compareTo('play some music') == 0) {
+    } else if (operation.toLowerCase().compareTo('play some music') == 0) {
       MusicSection.playMusic();
     }
 
@@ -65,34 +65,54 @@ class AssistantOperations {
       if (isAuthenticated) {
         Get.to(() => const NotesSection());
       }
+    } else if (operation.toLowerCase().compareTo('open note') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('view notes') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('view note') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('browse notes') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('browse note') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
     }
     // Add notes
     else if (operation.toLowerCase().compareTo('add notes') == 0) {
       Get.to(() => const AddEditNotePage());
+    } else if (operation.toLowerCase().compareTo('add note') == 0) {
+      Get.to(() => const AddEditNotePage());
+    } else if (operation.toLowerCase().compareTo('add a note') == 0) {
+      Get.to(() => const AddEditNotePage());
     }
 
-    // Set reminder - 1
+    // Set reminder
     else if (operation.toLowerCase().compareTo('set a reminder') == 0) {
       Get.to(() => const ReminderSection());
-    }
-
-    // Set reminder - 2
-    else if (operation.toLowerCase().compareTo('add a reminder') == 0) {
+    } else if (operation.toLowerCase().compareTo('add a reminder') == 0) {
       Get.to(() => const ReminderSection());
     }
 
-    // Set alarm - 1
+    // Set alarm
     else if (operation.toLowerCase().compareTo('set a alarm') == 0) {
       Get.to(() => AlarmClockSection());
-    }
-
-    // Set alarm - 2
-    else if (operation.toLowerCase().compareTo('set an alarm') == 0) {
+    } else if (operation.toLowerCase().compareTo('set an alarm') == 0) {
       Get.to(() => AlarmClockSection());
-    }
-
-    // Set alarm - 3
-    else if (operation.toLowerCase().compareTo('set alarm') == 0) {
+    } else if (operation.toLowerCase().compareTo('set alarm') == 0) {
       Get.to(() => AlarmClockSection());
     }
 

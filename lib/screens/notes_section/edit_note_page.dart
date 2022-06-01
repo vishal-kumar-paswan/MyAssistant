@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../database/notes_database.dart';
 import '../../models/notes_section/note.dart';
+import '../../utils/text_to_speech.dart';
 import '../../widgets/notes_section/note_form_widget.dart';
 
 class AddEditNotePage extends StatefulWidget {
@@ -96,8 +97,10 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
       if (isUpdating) {
         await updateNote();
+        TextToSpeechModel.speakText('Note updated');
       } else {
         await addNote();
+        TextToSpeechModel.speakText('Note added');
       }
 
       Navigator.of(context).pop();

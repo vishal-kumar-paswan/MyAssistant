@@ -1,10 +1,14 @@
 import 'package:assistant/screens/login_and_signup/login.dart';
 import 'package:assistant/screens/settings_section/about.dart';
 import 'package:assistant/screens/settings_section/development_team.dart';
+import 'package:assistant/screens/settings_section/how_to_use.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../utils/text_to_speech.dart';
 
 class SettingsSection extends StatefulWidget {
   const SettingsSection({Key? key}) : super(key: key);
@@ -97,7 +101,9 @@ class _SettingsSectionState extends State<SettingsSection> {
                 height: 10,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Get.to(const HowToUseSection());
+                },
                 child: const Text(
                   'How to use?',
                   style: TextStyle(
@@ -139,7 +145,11 @@ class _SettingsSectionState extends State<SettingsSection> {
                 height: 10,
               ),
               InkWell(
-                onTap: () {
+                onTap: () async {
+                  final SharedPreferences sharedPreferences =
+                      await SharedPreferences.getInstance();
+                  sharedPreferences.remove('email');
+                  sharedPreferences.remove('userId');
                   Get.to(LoginScreen());
                 },
                 child: const Text(

@@ -5,6 +5,7 @@ import 'package:assistant/screens/query_page/query_result.dart';
 import 'package:assistant/screens/settings_section/development_team.dart';
 import 'package:assistant/screens/settings_section/how_to_use.dart';
 import 'package:assistant/screens/share_files_section/share_files.dart';
+import 'package:assistant/screens/splash_screen.dart';
 import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,7 +37,7 @@ class Assistant extends StatelessWidget {
         fontFamily: GoogleFonts.nunito().fontFamily,
       ),
       routes: {
-        '/': (context) => const HomepageScreen(),
+        '/': (context) => const SplashScreen(),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
         '/homepage': (context) => const HomepageScreen(),
@@ -50,7 +51,7 @@ class Assistant extends StatelessWidget {
         '/aboutSection': (context) => const AboutSection(),
         '/howToUseSection': (context) => const HowToUseSection(),
       },
-      initialRoute: '/howToUseSection',
+      initialRoute: '/',
     );
   }
 }
