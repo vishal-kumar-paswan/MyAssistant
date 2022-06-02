@@ -16,12 +16,20 @@ import 'global_context.dart';
 
 class AssistantOperations {
   static void selectTask(String operation) async {
-
     // For greetings
     if (operation.toLowerCase().compareTo('good morning') == 0) {
-    
+      TextToSpeechModel.speakText('Good morning');
+    } else if (operation.toLowerCase().compareTo('good afternoon') == 0) {
+      TextToSpeechModel.speakText('Good afternoon');
+    } else if (operation.toLowerCase().compareTo('good evening') == 0) {
+      TextToSpeechModel.speakText('Good evening');
+    } else if (operation.toLowerCase().compareTo('good night') == 0) {
+      TextToSpeechModel.speakText('Good night');
     }
 
+    // Weather details
+    if (operation.toLowerCase().compareTo('how is the weather') == 0) {
+    } else if (operation.toLowerCase().compareTo('how\'s the weather') == 0) {}
 
     // For calling
     if (operation.toLowerCase().startsWith('call')) {

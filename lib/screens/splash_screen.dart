@@ -3,11 +3,14 @@
 import 'dart:async';
 import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/screens/login_and_signup/login.dart';
+import 'package:assistant/utils/get_weather_details.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String? finalEmail;
+Position? currentPostion;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -19,11 +22,31 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    getvalidationData().whenComplete(() async {
-      Timer(Duration(seconds: 3),
-          () => Get.to(finalEmail == null ? LoginScreen() : HomepageScreen()));
+    setTemperatureFormat();
+    GetWeatherDetails.determinePosition().whenComplete(() {
+      currentPostion = GetWeatherDetails.getLocation();
+      getvalidationData().whenComplete(() async {
+        Timer(
+          Duration(seconds: 2),
+          () => Get.to(
+            finalEmail == null ? LoginScreen() : HomepageScreen(),
+            arguments: [
+              currentPostion,
+            ],
+          ),
+        );
+      });
     });
+
     super.initState();
+  }
+
+  void setTemperatureFormat() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    if (sharedPreferences.get('temperature') == null) {
+      sharedPreferences.setString('temperature', 'celsius');
+    }
   }
 
   Future getvalidationData() async {
@@ -35,7 +58,6 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {
       finalEmail = obtainedemail;
     });
-    print(finalEmail);
   }
 
   @override

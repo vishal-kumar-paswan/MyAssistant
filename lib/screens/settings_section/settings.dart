@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../utils/text_to_speech.dart';
+bool? _lights;
+SharedPreferences? sharedPreferences;
 
 class SettingsSection extends StatefulWidget {
   const SettingsSection({Key? key}) : super(key: key);
@@ -18,7 +19,20 @@ class SettingsSection extends StatefulWidget {
 }
 
 class _SettingsSectionState extends State<SettingsSection> {
-  bool _lights = false;
+  void toggleTemperatureFormat(bool value) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+
+    if (value) {
+      setState(() {
+        sharedPreferences!.setString('temperature', 'fahrenheit');
+      });
+    } else {
+      setState(() {
+        sharedPreferences!.setString('temperature', 'celsius');
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,13 +91,12 @@ class _SettingsSectionState extends State<SettingsSection> {
                     scale: 0.8,
                     child: CupertinoSwitch(
                       activeColor: const Color.fromARGB(255, 4, 53, 187),
-                      value: _lights,
+                      value:
+                          sharedPreferences?.get('temperature') == 'fahrenheit'
+                              ? true
+                              : false,
                       onChanged: (bool value) {
-                        setState(
-                          () {
-                            _lights = value;
-                          },
-                        );
+                        toggleTemperatureFormat(value);
                       },
                     ),
                   ),

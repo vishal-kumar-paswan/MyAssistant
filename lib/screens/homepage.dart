@@ -1,16 +1,18 @@
 import 'package:assistant/screens/settings_section/settings.dart';
 import 'package:assistant/utils/assistant_operations.dart';
+import 'package:assistant/utils/text_to_speech.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
-import '../models/weather_model.dart';
-import '../utils/get_weather_details.dart';
+import 'package:weather/weather.dart';
 
 class HomepageScreen extends StatefulWidget {
   const HomepageScreen({Key? key}) : super(key: key);
@@ -20,39 +22,24 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
+  final WeatherFactory wf = WeatherFactory('6d7b8aa0f6a34dd44744f2dc19f95b2f');
+  final Position? position = Get.arguments[0];
   final stt.SpeechToText _speechToText = stt.SpeechToText();
   late bool? _speechEnabled;
   late String _lastWords = '';
-  late bool isDataAvailable = false;
-  late double? temperature = 0;
-  late String? description = '';
-  late Future<WeatherModel?> getWeatherDetails;
-  WeatherModel? weatherModel;
+  late bool isDataAvailable = true;
+  late int? temperature = 0;
+  late String? description = 'null';
+  late String? location = 'null';
   bool isMicActive = false;
 
   @override
   void initState() {
-    // getWeatherDetails = GetWeatherDetails().fetchWeatherDetails();
-    // weatherModel = await getWeatherDetails;
-    super.initState();
-    // getData();
     _initSpeech();
+    fetchWeatherData();
+    TextToSpeechModel.speakText('Welcome to my assistant');
+    super.initState();
   }
-
-  //TODO : Debug weather section
-  // void getData() async {
-  //   Future.delayed(const Duration(seconds: 2), () async {
-  //     weatherModel = await GetWeatherDetails().fetchWeatherDetails;
-  //   }).whenComplete(() {
-  //     if (weatherModel != null) {
-  //       setState(() {
-  //         temperature = weatherModel?.temperature;
-  //         description = weatherModel?.description;
-  //         isDataAvailable = true;
-  //       });
-  //     }
-  //   });
-  // }
 
   void _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();
@@ -85,12 +72,53 @@ class _HomepageScreenState extends State<HomepageScreen> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
-      // print("last words : $_lastWords");
     });
-    // print("recognised words: " + _lastWords);
-    // if (_lastWords != 'Hi there!') {
+
     AssistantOperations.selectTask(_lastWords);
-    // }
+  }
+
+  void fetchWeatherData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    print('temperature value: ');
+    print(sharedPreferences.get('temperature'));
+    if (sharedPreferences.get('temperature') == 'celsius') {
+      if (position != null) {
+        Weather weatherData = await wf.currentWeatherByLocation(
+            position!.latitude, position!.longitude);
+        setState(() {
+          temperature = weatherData.temperature?.celsius?.round();
+          description = weatherData.weatherDescription;
+          location = weatherData.areaName;
+        });
+      } else {
+        List<Weather> weatherDataList =
+            await wf.fiveDayForecastByCityName('New Delhi');
+        setState(() {
+          temperature = weatherDataList[0].temperature?.celsius?.round();
+          description = weatherDataList[0].weatherDescription;
+          location = weatherDataList[0].areaName;
+        });
+      }
+    } else if (sharedPreferences.get('temperature') == 'fahrenheit') {
+      if (position != null) {
+        Weather weatherData = await wf.currentWeatherByLocation(
+            position!.latitude, position!.longitude);
+        setState(() {
+          temperature = weatherData.temperature?.fahrenheit?.round();
+          description = weatherData.weatherDescription;
+          location = weatherData.areaName;
+        });
+      } else {
+        List<Weather> weatherDataList =
+            await wf.fiveDayForecastByCityName('New Delhi');
+        setState(() {
+          temperature = weatherDataList[0].temperature?.fahrenheit?.round();
+          description = weatherDataList[0].weatherDescription;
+          location = weatherDataList[0].areaName;
+        });
+      }
+    }
   }
 
   @override
@@ -137,28 +165,49 @@ class _HomepageScreenState extends State<HomepageScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Visibility(
-              visible: isDataAvailable,
-              child: Text(
-                temperature.toString(),
-                style: TextStyle(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  CupertinoIcons.location,
                   color: Colors.white,
-                  fontFamily: GoogleFonts.nunito().fontFamily,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  size: 20,
                 ),
-              ),
+                const SizedBox(
+                  width: 2.5,
+                ),
+                Text(
+                  location!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: GoogleFonts.nunito().fontFamily,
+                    fontSize: 18,
+                  ),
+                ),
+              ],
             ),
-            Visibility(
-              visible: isDataAvailable,
-              child: Text(
-                description.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: GoogleFonts.nunito().fontFamily,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    CupertinoIcons.thermometer,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                  const SizedBox(
+                    width: 2.5,
+                  ),
+                  Text(
+                    '${temperature!.toString()}°C, $description',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.nunito().fontFamily,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
