@@ -12,7 +12,7 @@ import '../../utils/text_to_speech.dart';
 Future<dynamic> signUpDetails(
     String _name, String _email, String _username, String _password) async {
   String url =
-      'http://ass69.herokuapp.com/signup?email=$_email&password=$_password';
+      'https://myassistantbackend.herokuapp.com/signup?email=$_email&password=$_password';
   final response = await http.post(
     Uri.parse(url),
     headers: <String, String>{

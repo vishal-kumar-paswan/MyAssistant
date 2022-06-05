@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
 
 _asyncFileUpload(File file, BuildContext ctx) async {
-  const String url = 'http://ass69.herokuapp.com/file?userId=696969/';
+  const String url = 'https://myassistantbackend.herokuapp.com/file?userId=696969/';
 
   var request = http.MultipartRequest("POST", Uri.parse(url));
   var pic = await http.MultipartFile.fromPath("file_field", file.path);

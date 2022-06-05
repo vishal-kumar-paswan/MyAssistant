@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<dynamic> fetchLoginDetails(String _userId, String _password) async {
   String url =
-      'http://ass69.herokuapp.com/login?email=$_userId&password=$_password';
+      'https://myassistantbackend.herokuapp.com/login?email=$_userId&password=$_password';
   final response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
@@ -25,12 +25,9 @@ Future<dynamic> fetchLoginDetails(String _userId, String _password) async {
 
   switch (status) {
     case 202:
-      print('login success!!');
       print(response.body);
 
       final decodedJson = json.decode(response.body);
-
-      print("decode value" + decodedJson['code']);
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString('email', _userId);
@@ -45,8 +42,6 @@ Future<dynamic> fetchLoginDetails(String _userId, String _password) async {
       );
       ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
           .showSnackBar(snackBar);
-      print('incorrect credentials');
-      print(response.body);
       break;
     default:
       const snackBar = SnackBar(

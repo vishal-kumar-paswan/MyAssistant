@@ -53,13 +53,14 @@ class AboutSection extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
             const Text(
               'Version 1.0',
               style: TextStyle(
                 fontSize: 15,
-                color: Colors.white,
+                color: Color.fromARGB(255, 33, 145, 243),
+                fontWeight: FontWeight.bold,
               ),
             )
           ],

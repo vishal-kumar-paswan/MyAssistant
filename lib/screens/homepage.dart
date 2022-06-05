@@ -23,7 +23,8 @@ class HomepageScreen extends StatefulWidget {
 
 class _HomepageScreenState extends State<HomepageScreen> {
   final WeatherFactory wf = WeatherFactory('6d7b8aa0f6a34dd44744f2dc19f95b2f');
-  final Position? position = Get.arguments[0];
+  double? latitude;
+  double? longitude;
   final stt.SpeechToText _speechToText = stt.SpeechToText();
   late bool? _speechEnabled;
   late String _lastWords = '';
@@ -35,9 +36,12 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   @override
   void initState() {
-    _initSpeech();
-    fetchWeatherData();
-    TextToSpeechModel.speakText('Welcome to my assistant');
+    fetchWeatherData().whenComplete(() {
+      _initSpeech();
+      TextToSpeechModel.speakText('Welcome to my assistant');
+      latitude = Get.arguments[0];
+      longitude = Get.arguments[1];
+    });
     super.initState();
   }
 
@@ -77,48 +81,49 @@ class _HomepageScreenState extends State<HomepageScreen> {
     AssistantOperations.selectTask(_lastWords);
   }
 
-  void fetchWeatherData() async {
+  Future fetchWeatherData() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    print('temperature value: ');
-    print(sharedPreferences.get('temperature'));
-    if (sharedPreferences.get('temperature') == 'celsius') {
-      if (position != null) {
-        Weather weatherData = await wf.currentWeatherByLocation(
-            position!.latitude, position!.longitude);
-        setState(() {
-          temperature = weatherData.temperature?.celsius?.round();
-          description = weatherData.weatherDescription;
-          location = weatherData.areaName;
-        });
-      } else {
-        List<Weather> weatherDataList =
-            await wf.fiveDayForecastByCityName('New Delhi');
-        setState(() {
-          temperature = weatherDataList[0].temperature?.celsius?.round();
-          description = weatherDataList[0].weatherDescription;
-          location = weatherDataList[0].areaName;
-        });
-      }
-    } else if (sharedPreferences.get('temperature') == 'fahrenheit') {
-      if (position != null) {
-        Weather weatherData = await wf.currentWeatherByLocation(
-            position!.latitude, position!.longitude);
-        setState(() {
-          temperature = weatherData.temperature?.fahrenheit?.round();
-          description = weatherData.weatherDescription;
-          location = weatherData.areaName;
-        });
-      } else {
-        List<Weather> weatherDataList =
-            await wf.fiveDayForecastByCityName('New Delhi');
-        setState(() {
-          temperature = weatherDataList[0].temperature?.fahrenheit?.round();
-          description = weatherDataList[0].weatherDescription;
-          location = weatherDataList[0].areaName;
-        });
-      }
+
+    // print('temperature value: ');
+    // print(sharedPreferences.get('temperature'));
+    // if (sharedPreferences.get('temperature') == 'celsius') {
+    if (latitude != null && longitude != null) {
+      Weather weatherData =
+          await wf.currentWeatherByLocation(latitude!, longitude!);
+      setState(() {
+        temperature = weatherData.temperature?.celsius?.round();
+        description = weatherData.weatherDescription;
+        location = weatherData.areaName;
+      });
+    } else {
+      List<Weather> weatherDataList =
+          await wf.fiveDayForecastByCityName('New Delhi');
+      setState(() {
+        temperature = weatherDataList[0].temperature?.celsius?.round();
+        description = weatherDataList[0].weatherDescription;
+        location = weatherDataList[0].areaName;
+      });
     }
+    // } else if (sharedPreferences.get('temperature') == 'fahrenheit') {
+    //   if (position != null) {
+    //     Weather weatherData = await wf.currentWeatherByLocation(
+    //         position!.latitude, position!.longitude);
+    //     setState(() {
+    //       temperature = weatherData.temperature?.fahrenheit?.round();
+    //       description = weatherData.weatherDescription;
+    //       location = weatherData.areaName;
+    //     });
+    //   } else {
+    //     List<Weather> weatherDataList =
+    //         await wf.fiveDayForecastByCityName('New Delhi');
+    //     setState(() {
+    //       temperature = weatherDataList[0].temperature?.fahrenheit?.round();
+    //       description = weatherDataList[0].weatherDescription;
+    //       location = weatherDataList[0].areaName;
+    //     });
+    //   }
+    // }
   }
 
   @override

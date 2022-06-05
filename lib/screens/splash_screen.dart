@@ -22,7 +22,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    setTemperatureFormat();
+    // setTemperatureFormat();
     GetWeatherDetails.determinePosition().whenComplete(() {
       currentPostion = GetWeatherDetails.getLocation();
       getvalidationData().whenComplete(() async {
@@ -31,7 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
           () => Get.to(
             finalEmail == null ? LoginScreen() : HomepageScreen(),
             arguments: [
-              currentPostion,
+              currentPostion!.latitude,
+              currentPostion!.longitude,
             ],
           ),
         );
