@@ -5,6 +5,7 @@ import 'package:device_apps/device_apps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +32,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   late bool isDataAvailable = true;
   late int? temperature = 0;
   late String? description = 'null';
+  String? userName;
   late String? location = 'null';
   bool isMicActive = false;
 
@@ -38,9 +40,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
   void initState() {
     fetchWeatherData().whenComplete(() {
       _initSpeech();
-      TextToSpeechModel.speakText('Welcome to my assistant');
-      latitude = Get.arguments[0];
-      longitude = Get.arguments[1];
+      TextToSpeechModel.speakText('Welcome $userName');
+      // latitude = Get.arguments[0];
+      // longitude = Get.arguments[1];
     });
     super.initState();
   }
@@ -51,7 +53,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
     setState(() {
       _lastWords = _speechEnabled == false
           ? "User denied microphone permissions"
-          : "Hi there!";
+          : "What can I do for you?";
     });
   }
 
@@ -68,7 +70,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   void _stopListening() async {
     await _speechToText.stop();
     setState(() {
-      _lastWords = "Hi there!";
+      _lastWords = "What can I do for you?";
       isMicActive = false;
     });
   }
@@ -84,6 +86,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
   Future fetchWeatherData() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
+
+    userName = sharedPreferences.get('name').toString();
+    print(userName);
 
     // print('temperature value: ');
     // print(sharedPreferences.get('temperature'));
@@ -136,12 +141,12 @@ class _HomepageScreenState extends State<HomepageScreen> {
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         elevation: 0.0,
         centerTitle: true,
-        backgroundColor: const Color(0xff050208),
+        backgroundColor: const Color(0xFFfdfbfb),
         actions: [
           IconButton(
               onPressed: () {
@@ -149,7 +154,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
               },
               icon: const Icon(
                 CupertinoIcons.settings_solid,
-                color: Colors.white,
+                color: Colors.black,
               ))
         ],
       ),
@@ -159,8 +164,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
+              Color(0xFFfdfbfb),
+              Color(0xFFebedee),
+              // Color.fromARGB(255, 0, 0, 0),
+              // Color.fromARGB(255, 13, 4, 44),
             ],
           ),
         ),
@@ -170,46 +177,78 @@ class _HomepageScreenState extends State<HomepageScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  CupertinoIcons.location,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                const SizedBox(
-                  width: 2.5,
-                ),
-                Text(
-                  location!,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
-                    fontSize: 18,
+            Expanded(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        CupertinoIcons.location,
+                        color: Colors.redAccent,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 2.5,
+                      ),
+                      Text(
+                        location!,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        CupertinoIcons.thermometer,
+                        color: Colors.blue,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 2.5,
+                      ),
+                      Text(
+                        '${temperature!.toString()}°C, $description',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Row(
+            Expanded(
+              // flex: 4,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    CupertinoIcons.thermometer,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                  const SizedBox(
-                    width: 2.5,
+                  Text(
+                    'Hello $userName. 👋',
+                    // textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontFamily: GoogleFonts.nunito().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Text(
-                    '${temperature!.toString()}°C, $description',
+                    _lastWords,
                     style: TextStyle(
-                      color: Colors.white,
                       fontFamily: GoogleFonts.nunito().fontFamily,
-                      fontSize: 18,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
                     ),
                   ),
                 ],
@@ -217,95 +256,110 @@ class _HomepageScreenState extends State<HomepageScreen> {
             ),
             Expanded(
               flex: 3,
-              child: Center(
-                child: Text(
-                  _lastWords,
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.nunito().fontFamily,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Visibility(
+                    visible: isMicActive,
+                    child: Lottie.network(
+                      'https://assets10.lottiefiles.com/packages/lf20_4tyanb7k.json',
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        _startListening();
-                        // print("recognised words: " + _lastWords);
-                        // if (_lastWords != 'Hi there!') {
-                        //   AssistantOperations.selectTask(_lastWords);
-                        // }
-                        Future.delayed(
-                            const Duration(
-                              seconds: 6,
-                            ), () {
-                          _stopListening();
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.redAccent,
-                        ),
-                        width: 75,
-                        height: 75,
-                        child: Icon(
-                          isMicActive
-                              ? Icons.mic_rounded
-                              : Icons.mic_off_rounded,
-                          size: 26,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: isMicActive,
-                      child: SizedBox(
-                        height: 100,
-                        child: WaveWidget(
-                          isLoop: true,
-                          size: const Size(double.infinity, double.infinity),
-                          config: CustomConfig(
-                            gradients: [
-                              [
-                                const Color.fromARGB(255, 255, 83, 83),
-                                const Color.fromARGB(119, 255, 53, 53)
-                              ],
-                              [
-                                const Color.fromARGB(255, 205, 80, 80),
-                                const Color.fromARGB(255, 200, 30, 30)
-                              ],
-                              [
-                                const Color.fromARGB(255, 255, 111, 100),
-                                const Color.fromARGB(235, 221, 42, 42)
-                              ],
-                              // [Colors.yellow, const Color(0x55FFEB3B)],
-                            ],
-                            durations: [3500, 1944, 1580],
-                            heightPercentages: [0.20, 0.23, 0.25],
-                            blur: const MaskFilter.blur(BlurStyle.solid, 10),
-                            gradientBegin: Alignment.bottomLeft,
-                            gradientEnd: Alignment.topRight,
-                          ),
-                          waveAmplitude: 0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     _startListening();
+                  //     // print("recognised words: " + _lastWords);
+                  //     // if (_lastWords != 'Hi there!') {
+                  //     //   AssistantOperations.selectTask(_lastWords);
+                  //     // }
+                  //     Future.delayed(
+                  //         const Duration(
+                  //           seconds: 6,
+                  //         ), () {
+                  //       _stopListening();
+                  //     });
+                  //   },
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(50),
+                  //       color: Colors.redAccent,
+                  //     ),
+                  //     width: 75,
+                  //     height: 75,
+                  //     child: Icon(
+                  //       isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
+                  //       size: 26,
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Visibility(
+                  //   visible: isMicActive,
+                  //   child: SizedBox(
+                  //     height: 100,
+                  //     child: WaveWidget(
+                  //       isLoop: true,
+                  //       size:
+                  //           const Size(double.infinity, double.infinity),
+                  //       config: CustomConfig(
+                  //         gradients: [
+                  //           [
+                  //             const Color.fromARGB(255, 255, 83, 83),
+                  //             const Color.fromARGB(119, 255, 53, 53)
+                  //           ],
+                  //           [
+                  //             const Color.fromARGB(255, 205, 80, 80),
+                  //             const Color.fromARGB(255, 200, 30, 30)
+                  //           ],
+                  //           [
+                  //             const Color.fromARGB(255, 255, 111, 100),
+                  //             const Color.fromARGB(235, 221, 42, 42)
+                  //           ],
+                  //           // [Colors.yellow, const Color(0x55FFEB3B)],
+                  //         ],
+                  //         durations: [3500, 1944, 1580],
+                  //         heightPercentages: [0.20, 0.23, 0.25],
+                  //         blur:
+                  //             const MaskFilter.blur(BlurStyle.solid, 10),
+                  //         gradientBegin: Alignment.bottomLeft,
+                  //         gradientEnd: Alignment.topRight,
+                  //       ),
+                  //       waveAmplitude: 0,
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           ],
         ),
       ),
+      floatingActionButton: InkWell(
+        onTap: () {
+          _startListening();
+          // print("recognised words: " + _lastWords);
+          // if (_lastWords != 'Hi there!') {
+          //   AssistantOperations.selectTask(_lastWords);
+          // }
+          Future.delayed(
+              const Duration(
+                seconds: 6,
+              ), () {
+            _stopListening();
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: const Color.fromARGB(255, 85, 18, 241),
+          ),
+          width: 75,
+          height: 75,
+          child: Icon(isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
+              size: 26, color: Colors.white),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

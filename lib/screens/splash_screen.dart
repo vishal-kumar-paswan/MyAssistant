@@ -30,10 +30,10 @@ class _SplashScreenState extends State<SplashScreen> {
           Duration(seconds: 2),
           () => Get.to(
             finalEmail == null ? LoginScreen() : HomepageScreen(),
-            arguments: [
-              currentPostion!.latitude,
-              currentPostion!.longitude,
-            ],
+            // arguments: [
+            //   currentPostion!.latitude,
+            //   currentPostion!.longitude,
+            // ],
           ),
         );
       });

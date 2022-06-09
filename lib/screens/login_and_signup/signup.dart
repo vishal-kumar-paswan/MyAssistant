@@ -1,18 +1,21 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/text_to_speech.dart';
 
 Future<dynamic> signUpDetails(
-    String _name, String _email, String _username, String _password) async {
+    String _name, String _email, String _password) async {
   String url =
-      'https://myassistantbackend.herokuapp.com/signup?email=$_email&password=$_password';
+      'https://483c-2405-201-9004-20a0-208c-610-fb5b-7446.ngrok.io/signup?name=$_name&email=$_email&password=$_password';
   final response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
@@ -25,13 +28,17 @@ Future<dynamic> signUpDetails(
 
   switch (status) {
     case 201:
-      Get.to(const HomepageScreen());
-      TextToSpeechModel.speakText('Welcome to my assistant');
-      print('signup success!!');
       print(response.body);
+      final decodedJson = json.decode(response.body);
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setString('email', _email);
+      sharedPreferences.setString('userId', decodedJson['code']);
+      sharedPreferences.setString('name', decodedJson['name']);
+      Get.to(const HomepageScreen());
+      // TextToSpeechModel.speakText('Welcome to my assistant');
       break;
     case 205:
-      print('check credentials');
       const snackBar = SnackBar(
         content: Text('Signup credentials already in use.'),
       );
@@ -46,7 +53,6 @@ Future<dynamic> signUpDetails(
       );
       ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
           .showSnackBar(snackBar);
-      print('something went wrong!!');
       break;
   }
 }
@@ -56,7 +62,6 @@ class SignupScreen extends StatelessWidget {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -142,26 +147,6 @@ class SignupScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
-                      controller: _usernameController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        icon: Icon(
-                          CupertinoIcons.at,
-                          color: Colors.white,
-                        ),
-                        hintText: 'Username',
-                        hintStyle: TextStyle(color: Colors.white),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) return "Username cannot be empty";
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
                       controller: _passwordController,
                       obscureText: true,
                       style: const TextStyle(color: Colors.white),
@@ -188,14 +173,13 @@ class SignupScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 50.0,
+                        horizontal: 70.0,
                       ),
                       child: InkWell(
                         onTap: () {
                           signUpDetails(
                             _nameController.text,
                             _emailController.text,
-                            _usernameController.text,
                             _passwordController.text,
                           );
                         },

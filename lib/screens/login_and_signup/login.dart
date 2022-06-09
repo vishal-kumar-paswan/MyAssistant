@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:assistant/screens/homepage.dart';
@@ -11,9 +13,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<dynamic> fetchLoginDetails(String _userId, String _password) async {
+Future<dynamic> fetchLoginDetails(String _email, String _password) async {
   String url =
-      'https://myassistantbackend.herokuapp.com/login?email=$_userId&password=$_password';
+      'https://483c-2405-201-9004-20a0-208c-610-fb5b-7446.ngrok.io/login?email=$_email&password=$_password';
   final response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
@@ -30,10 +32,11 @@ Future<dynamic> fetchLoginDetails(String _userId, String _password) async {
       final decodedJson = json.decode(response.body);
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      sharedPreferences.setString('email', _userId);
+      sharedPreferences.setString('email', _email);
       sharedPreferences.setString('userId', decodedJson['code']);
+      sharedPreferences.setString('name', decodedJson['name']);
       Get.to(const HomepageScreen());
-      TextToSpeechModel.speakText('Welcome to my assistant');
+      // TextToSpeechModel.speakText('Welcome to my assistant');
 
       break;
     case 401:

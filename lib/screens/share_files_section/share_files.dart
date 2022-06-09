@@ -5,8 +5,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 _asyncFileUpload(File file, BuildContext ctx) async {
-  const String url = 'https://myassistantbackend.herokuapp.com/file?userId=696969/';
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+  String _userId = sharedPreferences.get('userId').toString();
+
+  String url =
+      'https://483c-2405-201-9004-20a0-208c-610-fb5b-7446.ngrok.io/file?userId=$_userId';
 
   var request = http.MultipartRequest("POST", Uri.parse(url));
   var pic = await http.MultipartFile.fromPath("file_field", file.path);

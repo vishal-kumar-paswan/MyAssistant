@@ -163,6 +163,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                       await SharedPreferences.getInstance();
                   sharedPreferences.remove('email');
                   sharedPreferences.remove('userId');
+                  sharedPreferences.remove('name');
                   Get.to(LoginScreen());
                 },
                 child: const Text(
