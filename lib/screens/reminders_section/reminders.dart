@@ -6,6 +6,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../constants.dart';
+
 showAlertDialog(BuildContext context, String title, String description) {
   Widget okButton = TextButton(
     child: const Text(
@@ -117,16 +119,7 @@ class _ReminderSectionState extends State<ReminderSection> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44),
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +128,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                   'Task Scheduled!',
                   style: TextStyle(
                     fontFamily: GoogleFonts.nunito().fontFamily,
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                   ),
@@ -157,7 +150,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                         'Back to Home',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 13,
                         ),
                       ),
@@ -177,7 +170,7 @@ class _ReminderSectionState extends State<ReminderSection> {
             style: TextStyle(
               fontFamily: GoogleFonts.nunito().fontFamily,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 24,
             ),
           ),
@@ -188,16 +181,7 @@ class _ReminderSectionState extends State<ReminderSection> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44),
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -216,13 +200,13 @@ class _ReminderSectionState extends State<ReminderSection> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: GoogleFonts.nunito().fontFamily,
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 16,
                   ),
                   decoration: InputDecoration(
                     hintText: 'Enter your task',
                     hintStyle: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontFamily: GoogleFonts.nunito().fontFamily,
                     ),
@@ -252,7 +236,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: GoogleFonts.nunito().fontFamily,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 20,
                 ),
                 type: DateTimePickerType.time,
@@ -284,7 +268,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                       style: TextStyle(
                         fontFamily: GoogleFonts.nunito().fontFamily,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 15,
                       ),
                     ),

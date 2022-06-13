@@ -32,7 +32,7 @@ class NoteCardWidget extends StatelessWidget {
             Text(
               note.title,
               style: const TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -41,7 +41,7 @@ class NoteCardWidget extends StatelessWidget {
             Text(
               note.description,
               style: const TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 20,
                 // fontWeight: FontWeight.bold,
               ),
@@ -50,7 +50,7 @@ class NoteCardWidget extends StatelessWidget {
             Text(
               time,
               style: const TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 12,
               ),
             ),

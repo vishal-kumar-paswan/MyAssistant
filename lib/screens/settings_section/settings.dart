@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants.dart';
+
 bool? _lights;
 SharedPreferences? sharedPreferences;
 
@@ -40,7 +42,7 @@ class _SettingsSectionState extends State<SettingsSection> {
         title: Text(
           'Settings',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: GoogleFonts.nunito().fontFamily,
@@ -52,16 +54,7 @@ class _SettingsSectionState extends State<SettingsSection> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10.0,
@@ -74,7 +67,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   const Text(
                     'Temperature Format',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 23,
                     ),
                   ),
@@ -82,7 +75,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   const Text(
                     '°C',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
                     ),
@@ -103,7 +96,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                   const Text(
                     '°F',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
                     ),
@@ -120,7 +113,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                 child: const Text(
                   'How to use?',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
@@ -134,7 +127,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                 child: const Text(
                   'Development Team',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
@@ -148,7 +141,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                 child: const Text(
                   'About',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
@@ -169,7 +162,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                 child: const Text(
                   'Logout',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 23,
                     // fontWeight: FontWeight.bold,
                   ),
@@ -183,7 +176,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                 child: Text(
                   'Made with ❤️ using Flutter and Next.js',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 15.5,
                     // fontWeight: FontWeight.bold,
                   ),

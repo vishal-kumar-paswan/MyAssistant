@@ -1,17 +1,15 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
-
 import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/screens/login_and_signup/signup.dart';
 import 'package:assistant/utils/global_context.dart';
-import 'package:assistant/utils/text_to_speech.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../constants.dart';
 
 Future<dynamic> fetchLoginDetails(String _email, String _password) async {
   String url =
@@ -73,16 +71,7 @@ class LoginScreen extends StatelessWidget {
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44),
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Center(
@@ -98,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                           'MyAssistant',
                           textStyle: const TextStyle(
                               fontSize: 30,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                           speed: const Duration(
                             milliseconds: 200,
@@ -114,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                       'Makes your life simple.',
                       style: TextStyle(
                         fontSize: 13,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                     const SizedBox(
@@ -122,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     TextFormField(
                       controller: userIdController,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       decoration: const InputDecoration(
                         // enabledBorder: UnderlineInputBorder(
                         //   borderSide: BorderSide(
@@ -138,10 +127,10 @@ class LoginScreen extends StatelessWidget {
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.mail,
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 85, 18, 241),
                         ),
                         hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) return "Username cannot be empty";
@@ -154,7 +143,7 @@ class LoginScreen extends StatelessWidget {
                     TextFormField(
                       controller: passwordController,
                       obscureText: true,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       decoration: const InputDecoration(
                         // enabledBorder: UnderlineInputBorder(
                         //   borderSide: BorderSide(
@@ -169,10 +158,10 @@ class LoginScreen extends StatelessWidget {
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.lock_fill,
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 85, 18, 241),
                         ),
                         hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -201,7 +190,7 @@ class LoginScreen extends StatelessWidget {
                             child: Text(
                               'Login',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20,
                               ),
@@ -225,7 +214,7 @@ class LoginScreen extends StatelessWidget {
                         const Text(
                           'Don\'t have an account?',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                         TextButton(

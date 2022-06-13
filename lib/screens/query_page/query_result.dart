@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../constants.dart';
+
 class QuerySection extends StatefulWidget {
   List<Map<String, String>> query = Get.arguments;
 
@@ -19,16 +21,7 @@ class _QuerySectionState extends State<QuerySection> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -38,7 +31,7 @@ class _QuerySectionState extends State<QuerySection> {
                 Text(
                   'What is ${widget.query[0]['query']}?',
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                   ),
@@ -46,7 +39,7 @@ class _QuerySectionState extends State<QuerySection> {
                 const Text(
                   'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),

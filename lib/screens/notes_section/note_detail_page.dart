@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../constants.dart';
 import '../../database/notes_database.dart';
 import '../../models/notes_section/note.dart';
 import 'edit_note_page.dart';
@@ -56,16 +57,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           actions: [editButton(), deleteButton()],
         ),
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44),
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           child: isLoading
               ? const Center(child: CircularProgressIndicator())
               : Padding(
@@ -76,7 +68,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                       Text(
                         note.title,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
@@ -84,13 +76,13 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                       const SizedBox(height: 8),
                       Text(
                         DateFormat.yMMMd().format(note.createdTime),
-                        style: const TextStyle(color: Colors.white38),
+                        style: const TextStyle(color: Colors.black),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         note.description,
                         style: const TextStyle(
-                            color: Colors.white70, fontSize: 20),
+                            color: Colors.black, fontSize: 20),
                       )
                     ],
                   ),

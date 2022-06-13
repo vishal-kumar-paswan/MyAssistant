@@ -7,6 +7,8 @@ import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants.dart';
+
 _asyncFileUpload(File file, BuildContext ctx) async {
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
@@ -99,16 +101,7 @@ class _ShareFileSectionState extends State<ShareFileSection> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -132,7 +125,7 @@ class _ShareFileSectionState extends State<ShareFileSection> {
                 style: TextStyle(
                   fontFamily: GoogleFonts.nunito().fontFamily,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 17,
                 ),
               ),
@@ -159,7 +152,7 @@ class _ShareFileSectionState extends State<ShareFileSection> {
                     style: TextStyle(
                       fontFamily: GoogleFonts.nunito().fontFamily,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 15,
                     ),
                   ),

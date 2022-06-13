@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 class AboutSection extends StatelessWidget {
   const AboutSection({Key? key}) : super(key: key);
 
@@ -12,16 +14,7 @@ class AboutSection extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -38,7 +31,7 @@ class AboutSection extends StatelessWidget {
               'MyAssistant',
               style: TextStyle(
                 fontSize: 25,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -49,7 +42,7 @@ class AboutSection extends StatelessWidget {
               'Makes your life simple.',
               style: TextStyle(
                 fontSize: 15,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             const SizedBox(

@@ -9,6 +9,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constants.dart';
+
 String? finalEmail;
 Position? currentPostion;
 
@@ -67,16 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 'MyAssistant',
                 style: TextStyle(
                   fontSize: 25,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),

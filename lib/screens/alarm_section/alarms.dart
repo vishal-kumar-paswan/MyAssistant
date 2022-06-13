@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 
+import '../../constants.dart';
+
 class AlarmClockSection extends StatefulWidget {
+  const AlarmClockSection({Key? key}) : super(key: key);
+
   @override
   State<AlarmClockSection> createState() => _AlarmClockSectionState();
 }
@@ -34,16 +38,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44),
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +47,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                   'Alarm added for $hour:$minute',
                   style: TextStyle(
                     fontFamily: GoogleFonts.nunito().fontFamily,
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                   ),
@@ -74,7 +69,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                         'Back to Home',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 13,
                         ),
                       ),
@@ -94,7 +89,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
           title: Text(
             'MyAlarm',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: GoogleFonts.nunito().fontFamily,
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -102,16 +97,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
           ),
         ),
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44)
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           height: double.infinity,
           width: double.infinity,
           child: Column(
@@ -130,7 +116,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: GoogleFonts.nunito().fontFamily,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 30,
                 ),
                 type: DateTimePickerType.time,
@@ -162,7 +148,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                       style: TextStyle(
                         fontFamily: GoogleFonts.nunito().fontFamily,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 15,
                       ),
                     ),

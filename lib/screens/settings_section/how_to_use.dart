@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../constants.dart';
+
 //TODO: Add the open other app how to use
 
 void _launchDesktopSite() async {
@@ -21,7 +23,7 @@ class HowToUseSection extends StatelessWidget {
         title: Text(
           'How to use?',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: GoogleFonts.nunito().fontFamily,
@@ -33,16 +35,7 @@ class HowToUseSection extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10.0,
@@ -54,7 +47,7 @@ class HowToUseSection extends StatelessWidget {
               const Text(
                 'MyAssistant is a voice assistant app for managing all your daily tasks with ease.\nTap on the microphone button and speak any command to perform your tasks.',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 21,
                 ),
               ),
@@ -68,126 +61,126 @@ class HowToUseSection extends StatelessWidget {
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.phone,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Call YourContactName" to make a call.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.mail,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Send a message to YourContactName" to send a text.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.music_note_2,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Play some music" to groove on some beats.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.pen,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Add notes" to add some notes.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.pencil_ellipsis_rectangle,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Open notes" to access all your notes.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.bell,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Set a reminder" to get reminders of your important tasks.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.alarm,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Set an alarm" to set an alarm.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.arrow_right_square,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: Text(
                         'Say "Open AppName" to open any application.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     ListTile(
                       leading: const Icon(
                         CupertinoIcons.share,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 30,
                       ),
                       title: const Text(
                         'Say "Share files" to send files to your PC.',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       subtitle: Column(
@@ -197,7 +190,7 @@ class HowToUseSection extends StatelessWidget {
                             'Just visit the url on your PC given below and sign in with your login credentials.',
                             style: TextStyle(
                               // fontSize: 20,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                           InkWell(

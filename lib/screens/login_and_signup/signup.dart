@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants.dart';
 import '../../utils/text_to_speech.dart';
 
 Future<dynamic> signUpDetails(
@@ -68,16 +69,7 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Center(
@@ -90,7 +82,7 @@ class SignupScreen extends StatelessWidget {
                     const Text(
                       'Hey there,',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.w400,
                         fontSize: 26.0,
                       ),
@@ -98,7 +90,7 @@ class SignupScreen extends StatelessWidget {
                     const Text(
                       'Signup',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.w600,
                         fontSize: 30.0,
                       ),
@@ -108,15 +100,15 @@ class SignupScreen extends StatelessWidget {
                     ),
                     TextFormField(
                       controller: _nameController,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.person,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         hintText: 'Name',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) return "Name cannot be empty";
@@ -128,15 +120,15 @@ class SignupScreen extends StatelessWidget {
                     ),
                     TextFormField(
                       controller: _emailController,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.mail,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) return "Email cannot be empty";
@@ -149,15 +141,15 @@ class SignupScreen extends StatelessWidget {
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.lock_fill,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -189,7 +181,7 @@ class SignupScreen extends StatelessWidget {
                             child: Text(
                               'Sign Up',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20,
                               ),
@@ -212,7 +204,7 @@ class SignupScreen extends StatelessWidget {
                       children: [
                         const Text(
                           'Already have an account?',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.black),
                         ),
                         TextButton(
                           onPressed: () => Get.toNamed('/login'),

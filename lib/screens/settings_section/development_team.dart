@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 class DevelopmentTeamSection extends StatelessWidget {
   const DevelopmentTeamSection({Key? key}) : super(key: key);
 
@@ -20,16 +22,7 @@ class DevelopmentTeamSection extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 0, 0, 0),
-              Color.fromARGB(255, 13, 4, 44),
-            ],
-          ),
-        ),
+        decoration: screenBackground,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -46,7 +39,7 @@ class DevelopmentTeamSection extends StatelessWidget {
               'Soumyaneel Sarkar',
               style: TextStyle(
                 fontSize: 25,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -56,7 +49,7 @@ class DevelopmentTeamSection extends StatelessWidget {
             const Text(
               'Department of Computer Science',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
               ),
@@ -67,7 +60,7 @@ class DevelopmentTeamSection extends StatelessWidget {
             const Text(
               'Kalyani Mahavidyalaya',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
@@ -88,7 +81,7 @@ class DevelopmentTeamSection extends StatelessWidget {
               'Vishal Kumar Paswan',
               style: TextStyle(
                 fontSize: 25,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -97,7 +90,7 @@ class DevelopmentTeamSection extends StatelessWidget {
             ),
             const Text(
               'Department of Computer Science',
-              style: TextStyle(color: Colors.white, fontSize: 15),
+              style: TextStyle(color: Colors.black, fontSize: 15),
             ),
             const SizedBox(
               height: 8,
@@ -105,7 +98,7 @@ class DevelopmentTeamSection extends StatelessWidget {
             const Text(
               'Kalyani Mahavidyalaya',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
 import '../../database/notes_database.dart';
 import '../../models/notes_section/note.dart';
 import '../../utils/text_to_speech.dart';
@@ -39,7 +40,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: const Icon(CupertinoIcons.back, color: Colors.white),
+            icon: const Icon(CupertinoIcons.back, color: Colors.black),
             onPressed: () {},
           ),
           title: const Text(
@@ -55,16 +56,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44),
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           child: Form(
             key: _formKey,
             child: NoteFormWidget(

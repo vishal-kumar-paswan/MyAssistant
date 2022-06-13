@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../constants.dart';
 import '../../database/notes_database.dart';
 import '../../models/notes_section/note.dart';
 import '../../widgets/notes_section/note_card_widget.dart';
@@ -59,16 +60,7 @@ class _NotesSectionState extends State<NotesSection> {
           automaticallyImplyLeading: false,
         ),
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 0, 0, 0),
-                Color.fromARGB(255, 13, 4, 44),
-              ],
-            ),
-          ),
+          decoration: screenBackground,
           child: Center(
             child: isLoading
                 ? const CircularProgressIndicator()
@@ -76,7 +68,7 @@ class _NotesSectionState extends State<NotesSection> {
                     ? const Text(
                         'No Notes',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
