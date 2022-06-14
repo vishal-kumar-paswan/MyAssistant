@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:assistant/constants.dart';
 import 'package:assistant/screens/settings_section/settings.dart';
 import 'package:assistant/utils/assistant_operations.dart';
@@ -35,13 +37,25 @@ class _HomepageScreenState extends State<HomepageScreen> {
   late String? location = 'null';
   bool isMicActive = false;
 
+  Future<void> getLatitudeAndLongitude() async {
+    Timer(const Duration(seconds: 3), () {
+      latitude = Get.arguments[0];
+      longitude = Get.arguments[1];
+    });
+    print("passed value:");
+    print(latitude);
+    print(longitude);
+  }
+
   @override
   void initState() {
-    fetchWeatherData().whenComplete(() {
-      _initSpeech();
-      // TextToSpeechModel.speakText('Welcome $userName');
-      // latitude = Get.arguments[0];
-      // longitude = Get.arguments[1];
+    getLatitudeAndLongitude().whenComplete(() {
+      print("hello");
+      print(latitude);
+      print(longitude);
+      fetchWeatherData().whenComplete(() {
+        _initSpeech();
+      });
     });
     super.initState();
   }
@@ -288,10 +302,8 @@ class _HomepageScreenState extends State<HomepageScreen> {
               ),
               width: 75,
               height: 75,
-              child: Icon(
-                  isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
-                  size: 26,
-                  color: Colors.white),
+              child: 
+              
             ),
           ),
 

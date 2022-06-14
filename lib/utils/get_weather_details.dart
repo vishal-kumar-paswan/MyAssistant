@@ -41,6 +41,10 @@ class GetWeatherDetails {
     }
 
     position = await Geolocator.getCurrentPosition();
+
+    print("obtained location details");
+    print(position?.latitude);
+    print(position?.longitude);
   }
 
   static Position? getLocation() {

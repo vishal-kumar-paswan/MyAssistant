@@ -22,22 +22,30 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Future<void> getCurrentPosition() async {
+    currentPostion = await GetWeatherDetails.getLocation();
+    print(currentPostion?.latitude);
+    print(currentPostion?.longitude);
+  }
+
   @override
   void initState() {
     // setTemperatureFormat();
     GetWeatherDetails.determinePosition().whenComplete(() {
-      currentPostion = GetWeatherDetails.getLocation();
-      getvalidationData().whenComplete(() async {
-        Timer(
-          Duration(seconds: 2),
-          () => Get.to(
-            finalEmail == null ? LoginScreen() : HomepageScreen(),
-            // arguments: [
-            //   currentPostion!.latitude,
-            //   currentPostion!.longitude,
-            // ],
-          ),
-        );
+      // currentPostion =  GetWeatherDetails.getLocation();
+      getCurrentPosition().whenComplete(() {
+        getvalidationData().whenComplete(() async {
+          Timer(
+            Duration(seconds: 2),
+            () => Get.to(
+              finalEmail == null ? LoginScreen() : HomepageScreen(),
+              arguments: [
+                currentPostion?.latitude,
+                currentPostion?.longitude,
+              ],
+            ),
+          );
+        });
       });
     });
 
