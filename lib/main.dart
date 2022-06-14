@@ -10,7 +10,7 @@ import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../utils/permission_requests.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../screens/homepage.dart';
 import 'screens/login_and_signup/login.dart';
 import 'screens/login_and_signup/signup.dart';
@@ -19,10 +19,19 @@ import 'screens/reminders_section/reminders.dart';
 import 'screens/settings_section/about.dart';
 import 'screens/settings_section/settings.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  PermissionRequests.permissionRequests();
-  runApp(const Assistant());
+  await [
+    Permission.bluetooth,
+    Permission.bluetoothConnect,
+    Permission.contacts,
+    Permission.microphone,
+    Permission.sms,
+    Permission.phone,
+    Permission.location,
+  ].request().whenComplete(() {
+    runApp(const Assistant());
+  });
 }
 
 class Assistant extends StatelessWidget {
@@ -38,7 +47,7 @@ class Assistant extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const SplashScreen(),
-        '/login': (context) => LoginScreen(),
+        '/login': (context) => const LoginScreen(),
         '/signup': (context) => SignupScreen(),
         '/homepage': (context) => const HomepageScreen(),
         '/notesSection': (context) => const NotesSection(),

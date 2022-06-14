@@ -14,8 +14,7 @@ _asyncFileUpload(File file, BuildContext ctx) async {
       await SharedPreferences.getInstance();
   String _userId = sharedPreferences.get('userId').toString();
 
-  String url =
-      'https://483c-2405-201-9004-20a0-208c-610-fb5b-7446.ngrok.io/file?userId=$_userId';
+  String url = 'https://myassistantbackend.herokuapp.com/file?userId=$_userId';
 
   var request = http.MultipartRequest("POST", Uri.parse(url));
   var pic = await http.MultipartFile.fromPath("file_field", file.path);

@@ -6,6 +6,7 @@ import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,7 @@ import '../../utils/text_to_speech.dart';
 Future<dynamic> signUpDetails(
     String _name, String _email, String _password) async {
   String url =
-      'https://483c-2405-201-9004-20a0-208c-610-fb5b-7446.ngrok.io/signup?name=$_name&email=$_email&password=$_password';
+      'https://myassistantbackend.herokuapp.com/signup?name=$_name&email=$_email&password=$_password';
   final response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
@@ -154,7 +155,7 @@ class SignupScreen extends StatelessWidget {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Password cannot be empty";
-                        } else if (value.length < 8) {
+                        } else if (value.length < 6) {
                           return "Password cannot be less than 8 characters";
                         }
                         return null;
@@ -169,6 +170,8 @@ class SignupScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
+                          SystemChannels.textInput
+                              .invokeMethod('TextInput.hide');
                           signUpDetails(
                             _nameController.text,
                             _emailController.text,

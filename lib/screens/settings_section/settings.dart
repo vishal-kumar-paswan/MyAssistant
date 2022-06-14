@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../constants.dart';
+import '../../database/notes_database.dart';
 
 bool? _lights;
 SharedPreferences? sharedPreferences;
@@ -157,7 +157,8 @@ class _SettingsSectionState extends State<SettingsSection> {
                   sharedPreferences.remove('email');
                   sharedPreferences.remove('userId');
                   sharedPreferences.remove('name');
-                  Get.to(LoginScreen());
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/login", (Route<dynamic> route) => false);
                 },
                 child: const Text(
                   'Logout',

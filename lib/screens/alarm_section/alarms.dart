@@ -56,7 +56,10 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                   height: 15,
                 ),
                 InkWell(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/homepage", (Route<dynamic> route) => false);
+                  },
                   child: Container(
                     height: 40,
                     width: 140,

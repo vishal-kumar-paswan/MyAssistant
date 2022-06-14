@@ -137,7 +137,10 @@ class _ReminderSectionState extends State<ReminderSection> {
                   height: 15,
                 ),
                 InkWell(
-                  onTap: () => Get.toNamed('/homepage'),
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/homepage", (Route<dynamic> route) => false);
+                  },
                   child: Container(
                     height: 40,
                     width: 140,

@@ -44,6 +44,12 @@ class AssistantOperations {
     } else if (operation.toLowerCase().startsWith('send message to')) {
       SendSMS.sendMessage(
           (NavigationService.navigatorKey.currentContext)!, operation);
+    } else if (operation.toLowerCase().startsWith('send a text to')) {
+      SendSMS.sendMessage(
+          (NavigationService.navigatorKey.currentContext)!, operation);
+    } else if (operation.toLowerCase().startsWith('send text to')) {
+      SendSMS.sendMessage(
+          (NavigationService.navigatorKey.currentContext)!, operation);
     }
 
     //TODO: Debug query section
@@ -57,6 +63,8 @@ class AssistantOperations {
 
     // For sharing files
     else if (operation.toLowerCase().startsWith('share files')) {
+      Get.to(() => ShareFileSection());
+    } else if (operation.toLowerCase().startsWith('transfer files')) {
       Get.to(() => ShareFileSection());
     }
 
@@ -113,15 +121,25 @@ class AssistantOperations {
       Get.to(() => const ReminderSection());
     } else if (operation.toLowerCase().compareTo('add a reminder') == 0) {
       Get.to(() => const ReminderSection());
+    } else if (operation.toLowerCase().compareTo('set reminder') == 0) {
+      Get.to(() => const ReminderSection());
+    } else if (operation.toLowerCase().compareTo('add reminder') == 0) {
+      Get.to(() => const ReminderSection());
     }
 
     // Set alarm
     else if (operation.toLowerCase().compareTo('set a alarm') == 0) {
-      Get.to(() => AlarmClockSection());
+      Get.to(() => const AlarmClockSection());
     } else if (operation.toLowerCase().compareTo('set an alarm') == 0) {
-      Get.to(() => AlarmClockSection());
+      Get.to(() => const AlarmClockSection());
     } else if (operation.toLowerCase().compareTo('set alarm') == 0) {
-      Get.to(() => AlarmClockSection());
+      Get.to(() => const AlarmClockSection());
+    } else if (operation.toLowerCase().compareTo('add a alarm') == 0) {
+      Get.to(() => const AlarmClockSection());
+    } else if (operation.toLowerCase().compareTo('add an alarm') == 0) {
+      Get.to(() => const AlarmClockSection());
+    } else if (operation.toLowerCase().compareTo('add alarm') == 0) {
+      Get.to(() => const AlarmClockSection());
     }
 
     // To open device apps

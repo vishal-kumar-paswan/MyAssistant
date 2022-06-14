@@ -100,7 +100,11 @@ CREATE TABLE $tableNotes (
 
   Future close() async {
     final db = await instance.database;
-
     db.close();
+  }
+
+  Future<void> dropTable() async {
+    final db = await instance.database;
+    await db.execute("DROP TABLE IF EXISTS notes");
   }
 }
