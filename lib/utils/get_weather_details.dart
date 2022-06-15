@@ -1,10 +1,11 @@
 import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetWeatherDetails {
-  static Position? position;
-  static Future<Position?> determinePosition() async {
+  static late Position position;
+  static Future<bool> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -17,7 +18,7 @@ class GetWeatherDetails {
         );
         ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
             .showSnackBar(snackBar);
-        return null;
+        return false;
       }
     }
 
@@ -27,7 +28,7 @@ class GetWeatherDetails {
       );
       ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
           .showSnackBar(snackBar);
-      return null;
+      return false;
     }
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -37,17 +38,28 @@ class GetWeatherDetails {
       );
       ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
           .showSnackBar(snackBar);
-      return null;
+      return false;
     }
-
+    print("getting the data");
     position = await Geolocator.getCurrentPosition();
-
-    print("obtained location details");
-    print(position?.latitude);
-    print(position?.longitude);
+    print("position value");
+    print(position);
+    return true;
   }
 
-  static Position? getLocation() {
-    return position;
+  static void getLocation() async {
+    bool fetchLocationData = await determinePosition();
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    if (fetchLocationData) {
+      sharedPreferences.setDouble('latitude', position.latitude);
+      sharedPreferences.setDouble('longitude', position.longitude);
+      print("passed value: pt 1");
+      print(position.latitude);
+      print(position.longitude);
+    } else {
+      sharedPreferences.setDouble('latitude', 28.6139);
+      sharedPreferences.setDouble('longitude', 77.2090);
+    }
   }
 }

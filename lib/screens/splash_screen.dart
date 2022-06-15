@@ -5,14 +5,12 @@ import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/screens/login_and_signup/login.dart';
 import 'package:assistant/utils/get_weather_details.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
 String? finalEmail;
-Position? currentPostion;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -23,29 +21,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> getCurrentPosition() async {
-    currentPostion = await GetWeatherDetails.getLocation();
-    print(currentPostion?.latitude);
-    print(currentPostion?.longitude);
+    GetWeatherDetails.getLocation();
   }
 
   @override
   void initState() {
-    // setTemperatureFormat();
-    GetWeatherDetails.determinePosition().whenComplete(() {
-      // currentPostion =  GetWeatherDetails.getLocation();
-      getCurrentPosition().whenComplete(() {
-        getvalidationData().whenComplete(() async {
-          Timer(
-            Duration(seconds: 2),
-            () => Get.to(
-              finalEmail == null ? LoginScreen() : HomepageScreen(),
-              arguments: [
-                currentPostion?.latitude,
-                currentPostion?.longitude,
-              ],
-            ),
-          );
-        });
+    getCurrentPosition().whenComplete(() {
+      getvalidationData().whenComplete(() async {
+        Timer(
+          Duration(seconds: 3),
+          () => Get.to(
+            finalEmail == null ? LoginScreen() : HomepageScreen(),
+          ),
+        );
       });
     });
 

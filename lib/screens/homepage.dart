@@ -25,6 +25,7 @@ class HomepageScreen extends StatefulWidget {
 
 class _HomepageScreenState extends State<HomepageScreen> {
   final WeatherFactory wf = WeatherFactory('6d7b8aa0f6a34dd44744f2dc19f95b2f');
+  late bool areAllPermissionsAllowed;
   double? latitude;
   double? longitude;
   final stt.SpeechToText _speechToText = stt.SpeechToText();
@@ -38,13 +39,22 @@ class _HomepageScreenState extends State<HomepageScreen> {
   bool isMicActive = false;
 
   Future<void> getLatitudeAndLongitude() async {
-    Timer(const Duration(seconds: 3), () {
-      latitude = Get.arguments[0];
-      longitude = Get.arguments[1];
-    });
-    print("passed value:");
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    latitude = sharedPreferences.getDouble('latitude');
+    longitude = sharedPreferences.getDouble('longitude');
+
+    print("passed value: pt 1");
     print(latitude);
     print(longitude);
+  }
+
+  void setName() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    userName = sharedPreferences.get('name').toString();
   }
 
   @override
@@ -72,7 +82,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   void _startListening() async {
     await _speechToText.listen(
-      // listenMode: ListenMode.confirmation,
       onResult: _onSpeechResult,
       partialResults: false,
     );
@@ -98,236 +107,198 @@ class _HomepageScreenState extends State<HomepageScreen> {
   }
 
   Future fetchWeatherData() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-
-    userName = sharedPreferences.get('name').toString();
-
-    // print('temperature value: ');
-    // print(sharedPreferences.get('temperature'));
-    // if (sharedPreferences.get('temperature') == 'celsius') {
-    if (latitude != null && longitude != null) {
-      Weather weatherData =
-          await wf.currentWeatherByLocation(latitude!, longitude!);
-      setState(() {
-        temperature = weatherData.temperature?.celsius?.round();
-        description = weatherData.weatherDescription;
-        location = weatherData.areaName;
-      });
-    } else {
-      List<Weather> weatherDataList =
-          await wf.fiveDayForecastByCityName('New Delhi');
-      setState(() {
-        temperature = weatherDataList[0].temperature?.celsius?.round();
-        description = weatherDataList[0].weatherDescription;
-        location = weatherDataList[0].areaName;
-      });
-    }
-    // } else if (sharedPreferences.get('temperature') == 'fahrenheit') {
-    //   if (position != null) {
-    //     Weather weatherData = await wf.currentWeatherByLocation(
-    //         position!.latitude, position!.longitude);
-    //     setState(() {
-    //       temperature = weatherData.temperature?.fahrenheit?.round();
-    //       description = weatherData.weatherDescription;
-    //       location = weatherData.areaName;
-    //     });
-    //   } else {
-    //     List<Weather> weatherDataList =
-    //         await wf.fiveDayForecastByCityName('New Delhi');
-    //     setState(() {
-    //       temperature = weatherDataList[0].temperature?.fahrenheit?.round();
-    //       description = weatherDataList[0].weatherDescription;
-    //       location = weatherDataList[0].areaName;
-    //     });
-    //   }
-    // }
+    Weather weatherData =
+        await wf.currentWeatherByLocation(latitude!, longitude!);
+    setState(() {
+      temperature = weatherData.temperature?.celsius?.round();
+      description = weatherData.weatherDescription;
+      location = weatherData.areaName;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return DoubleBack(
-      message: "Press back again to close MyAssistant",
-      child: WillPopScope(
-        onWillPop: (() async => false),
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: const Text(
-              "MyAssistant",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+    return WillPopScope(
+      onWillPop: (() async => false),
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text(
+            "MyAssistant",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
-            elevation: 0.0,
-            centerTitle: true,
-            backgroundColor: const Color(0xFFfdfbfb),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Get.to(const SettingsSection());
-                  },
-                  icon: const Icon(
-                    CupertinoIcons.settings_solid,
-                    color: Colors.black,
-                  ))
-            ],
           ),
-          body: Container(
-            decoration: screenBackground,
-            height: double.infinity,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          CupertinoIcons.location,
-                          color: Colors.redAccent,
-                          size: 20,
-                        ),
-                        const SizedBox(
-                          width: 2.5,
-                        ),
-                        Text(
-                          location!,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          CupertinoIcons.thermometer,
-                          color: Colors.blue,
-                          size: 20,
-                        ),
-                        const SizedBox(
-                          width: 2.5,
-                        ),
-                        Text(
-                          '${temperature!.toString()}°C, $description',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Visibility(
-                    visible: !isMicActive,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Lottie.asset(
-                          'assets/hello_animation.json',
-                        ),
-                        Text(
-                          'Hello $userName. 👋',
-                          // textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.black,
-                            fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    replacement: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Visibility(
-                          visible: isMicActive,
-                          child: Lottie.network(
-                            networkLottieAnimation,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+          elevation: 0.0,
+          centerTitle: true,
+          backgroundColor: const Color(0xFFfdfbfb),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.to(const SettingsSection());
+                },
+                icon: const Icon(
+                  CupertinoIcons.settings_solid,
+                  color: Colors.black,
+                ))
+          ],
+        ),
+        body: Container(
+          decoration: screenBackground,
+          height: double.infinity,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const Icon(
+                        CupertinoIcons.location,
+                        color: Colors.redAccent,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 2.5,
+                      ),
                       Text(
-                        _lastWords,
+                        location!,
                         style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
                           color: Colors.black,
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        CupertinoIcons.thermometer,
+                        color: Colors.blue,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 2.5,
+                      ),
+                      Text(
+                        '${temperature!.toString()}°C, $description',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Expanded(
+                flex: 2,
+                child: Visibility(
+                  visible: !isMicActive,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset(
+                        'assets/hello_animation.json',
+                      ),
+                      Text(
+                        'Hello $userName. 👋',
+                        // textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  replacement: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Visibility(
+                        visible: isMicActive,
+                        child: Lottie.network(
+                          networkLottieAnimation,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          floatingActionButton: InkWell(
-            onTap: () {
-              _startListening();
-              Future.delayed(
-                  const Duration(
-                    seconds: 6,
-                  ), () {
-                _stopListening();
-              });
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: const Color.fromARGB(255, 85, 18, 241),
               ),
-              width: 75,
-              height: 75,
-              child: 
-              
+              Expanded(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      _lastWords,
+                      style: TextStyle(
+                        fontFamily: GoogleFonts.nunito().fontFamily,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: InkWell(
+          onTap: () {
+            _startListening();
+            Future.delayed(
+                const Duration(
+                  seconds: 6,
+                ), () {
+              _stopListening();
+            });
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: const Color.fromARGB(255, 85, 18, 241),
+            ),
+            width: 75,
+            height: 75,
+            child: Icon(
+              isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
+              size: 26,
+              color: Colors.white,
             ),
           ),
-
-          // FloatingActionButton(
-          //   backgroundColor: const Color.fromARGB(255, 85, 18, 241),
-          //   onPressed: () {
-          //     _startListening();
-          //     Future.delayed(
-          //         const Duration(
-          //           seconds: 6,
-          //         ), () {
-          //       _stopListening();
-          //     });
-          //   },
-          //   child: Icon(
-          //     isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
-          //     size: 26,
-          //     color: Colors.white,
-          //   ),
-          // ),
-
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
         ),
+
+        // FloatingActionButton(
+        //   backgroundColor: const Color.fromARGB(255, 85, 18, 241),
+        //   onPressed: () {
+        //     _startListening();
+        //     Future.delayed(
+        //         const Duration(
+        //           seconds: 6,
+        //         ), () {
+        //       _stopListening();
+        //     });
+        //   },
+        //   child: Icon(
+        //     isMicActive ? Icons.mic_rounded : Icons.mic_off_rounded,
+        //     size: 26,
+        //     color: Colors.white,
+        //   ),
+        // ),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
