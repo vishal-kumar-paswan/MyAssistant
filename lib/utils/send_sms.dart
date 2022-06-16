@@ -24,7 +24,8 @@ class SendSMS {
   }
 
   static void sendMessage(BuildContext context, String operation) async {
-    String contactName = operation.substring(operation.lastIndexOf(' ') + 1);
+    String contactName = operation.substring(operation.lastIndexOf('to') + 3);
+    print("contact name" + contactName);
     ContactDetails _contactDetails =
         await FetchContactDetails.getContactNumber(contactName);
 

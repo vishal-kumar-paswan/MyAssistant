@@ -21,7 +21,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> getCurrentPosition() async {
-    GetWeatherDetails.getLocation();
+    GetPositionDetails.getLocation();
   }
 
   @override
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Timer(
           Duration(seconds: 3),
           () => Get.to(
-            finalEmail == null ? LoginScreen() : HomepageScreen(),
+            finalEmail == null ? () => LoginScreen() : () => HomepageScreen(),
           ),
         );
       });

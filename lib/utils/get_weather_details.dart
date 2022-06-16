@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class GetWeatherDetails {
+class GetPositionDetails {
   static late Position position;
   static Future<bool> determinePosition() async {
     bool serviceEnabled;
@@ -52,14 +52,16 @@ class GetWeatherDetails {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     if (fetchLocationData) {
+      print("im at true part");
       sharedPreferences.setDouble('latitude', position.latitude);
       sharedPreferences.setDouble('longitude', position.longitude);
       print("passed value: pt 1");
       print(position.latitude);
       print(position.longitude);
     } else {
-      sharedPreferences.setDouble('latitude', 28.6139);
-      sharedPreferences.setDouble('longitude', 77.2090);
+      print("im at false part");
+      sharedPreferences.setDouble('latitude', 28.6128);
+      sharedPreferences.setDouble('longitude', 77.2311);
     }
   }
 }

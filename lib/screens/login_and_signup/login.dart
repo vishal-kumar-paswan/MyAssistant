@@ -72,189 +72,186 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DoubleBack(
-      message: "Press back again to close MyAssistant",
-      child: WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: screenBackground,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage('assets/icon.png'),
-                      ),
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-                      AnimatedTextKit(
-                        repeatForever: true,
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                            'MyAssistant',
-                            textStyle: const TextStyle(
-                              fontSize: 30,
-                              color: Color.fromARGB(255, 85, 18, 241),
-                              fontWeight: FontWeight.bold,
-                            ),
-                            speed: const Duration(
-                              milliseconds: 200,
-                            ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: screenBackground,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage('assets/icon.png'),
+                    ),
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+                    AnimatedTextKit(
+                      repeatForever: true,
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                          'MyAssistant',
+                          textStyle: const TextStyle(
+                            fontSize: 30,
+                            color: Color.fromARGB(255, 85, 18, 241),
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                        isRepeatingAnimation: true,
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      const Text(
-                        'Makes your life simple.',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.black,
+                          speed: const Duration(
+                            milliseconds: 200,
+                          ),
                         ),
+                      ],
+                      isRepeatingAnimation: true,
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    const Text(
+                      'Makes your life simple.',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
                       ),
-                      const SizedBox(
-                        height: 40.0,
+                    ),
+                    const SizedBox(
+                      height: 40.0,
+                    ),
+                    TextFormField(
+                      controller: userIdController,
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 85, 18, 241),
                       ),
-                      TextFormField(
-                        controller: userIdController,
-                        style: const TextStyle(
+                      decoration: const InputDecoration(
+                        // enabledBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+
+                        // focusedBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        border: InputBorder.none,
+                        icon: Icon(
+                          CupertinoIcons.mail,
                           color: Color.fromARGB(255, 85, 18, 241),
                         ),
-                        decoration: const InputDecoration(
-                          // enabledBorder: UnderlineInputBorder(
-                          //   borderSide: BorderSide(
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
-
-                          // focusedBorder: UnderlineInputBorder(
-                          //   borderSide: BorderSide(
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
-                          border: InputBorder.none,
-                          icon: Icon(
-                            CupertinoIcons.mail,
-                            color: Color.fromARGB(255, 85, 18, 241),
-                          ),
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 85, 18, 241),
-                          ),
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 85, 18, 241),
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) return "Username cannot be empty";
-                          return null;
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) return "Username cannot be empty";
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 85, 18, 241)),
+                      decoration: const InputDecoration(
+                        // enabledBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        // focusedBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        border: InputBorder.none,
+                        icon: Icon(
+                          CupertinoIcons.lock_fill,
+                          color: Color.fromARGB(255, 85, 18, 241),
+                        ),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 85, 18, 241),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Password cannot be empty";
+                        } else if (value.length < 8) {
+                          return "Password cannot be less than 8 characters";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 70.0,
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          SystemChannels.textInput
+                              .invokeMethod('TextInput.hide');
+                          fetchLoginDetails(
+                              userIdController.text, passwordController.text);
                         },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 85, 18, 241)),
-                        decoration: const InputDecoration(
-                          // enabledBorder: UnderlineInputBorder(
-                          //   borderSide: BorderSide(
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
-                          // focusedBorder: UnderlineInputBorder(
-                          //   borderSide: BorderSide(
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
-                          border: InputBorder.none,
-                          icon: Icon(
-                            CupertinoIcons.lock_fill,
-                            color: Color.fromARGB(255, 85, 18, 241),
-                          ),
-                          hintText: 'Password',
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 85, 18, 241),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Password cannot be empty";
-                          } else if (value.length < 8) {
-                            return "Password cannot be less than 8 characters";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 70.0,
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            SystemChannels.textInput
-                                .invokeMethod('TextInput.hide');
-                            fetchLoginDetails(
-                                userIdController.text, passwordController.text);
-                          },
-                          child: AnimatedContainer(
-                            duration: const Duration(seconds: 1),
-                            child: const Center(
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                ),
+                        child: AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          child: const Center(
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
                               ),
                             ),
-                            height: 50.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: const Color.fromARGB(255, 85, 18, 241),
-                            ),
+                          ),
+                          height: 50.0,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: const Color.fromARGB(255, 85, 18, 241),
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Don\'t have an account?',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Don\'t have an account?',
+                          style: TextStyle(
+                            color: Colors.black,
                           ),
-                          TextButton(
-                            onPressed: () {
-                              SystemChannels.textInput
-                                  .invokeMethod('TextInput.hide');
-                              Get.to(SignupScreen());
-                            },
-                            child: const Text('Signup'),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
+                            Get.to(SignupScreen());
+                          },
+                          child: const Text('Signup'),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

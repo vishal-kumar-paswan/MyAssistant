@@ -11,5 +11,3 @@ const screenBackground = BoxDecoration(
   ),
 );
 
-const networkLottieAnimation =
-    'https://assets10.lottiefiles.com/packages/lf20_4tyanb7k.json';

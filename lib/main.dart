@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/homepage.dart';
 import 'screens/login_and_signup/login.dart';
 import 'screens/login_and_signup/signup.dart';
@@ -18,6 +19,29 @@ import 'screens/notes_section/notes_page.dart';
 import 'screens/reminders_section/reminders.dart';
 import 'screens/settings_section/about.dart';
 import 'screens/settings_section/settings.dart';
+
+Future<void> checkIfAllPermissionsAreAllowed() async {
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+  bool bluetoothPermission = await Permission.bluetooth.status.isDenied;
+  bool bluetoothConnectPermission =
+      await Permission.bluetoothConnect.status.isDenied;
+  bool contactsPermission = await Permission.contacts.status.isDenied;
+  bool microphonePermission = await Permission.microphone.status.isDenied;
+  bool smsPermission = await Permission.sms.status.isDenied;
+  bool phonePermission = await Permission.phone.status.isDenied;
+  bool locationPermission = await Permission.location.status.isDenied;
+
+  bluetoothPermission &&
+          bluetoothConnectPermission &&
+          contactsPermission &&
+          smsPermission &&
+          microphonePermission &&
+          phonePermission &&
+          locationPermission
+      ? sharedPreferences.setBool('allPermissionsAllowed', true)
+      : sharedPreferences.setBool('allPermissionsAllowed', false);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +54,9 @@ void main() async {
     Permission.phone,
     Permission.location,
   ].request().whenComplete(() {
-    runApp(const Assistant());
+    checkIfAllPermissionsAreAllowed().whenComplete(
+      () => runApp(const Assistant()),
+    );
   });
 }
 
