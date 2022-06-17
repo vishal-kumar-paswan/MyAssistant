@@ -121,8 +121,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: (() async => false),
-      child: areAllPermissionsAllowed!
-          ? Scaffold(
+      child: 
+      // areAllPermissionsAllowed !? 
+          Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
                 title: const Text(
@@ -304,15 +305,15 @@ class _HomepageScreenState extends State<HomepageScreen> {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
             )
-          : Scaffold(
-              body: Center(
-                child: Lottie.asset(
-                  'assets/error.json',
-                  height: 200,
-                  width: 200,
-                ),
-              ),
-            ),
+          // : Scaffold(
+          //     body: Center(
+          //       child: Lottie.asset(
+          //         'assets/error.json',
+          //         height: 200,
+          //         width: 200,
+          //       ),
+          //     ),
+          //   ),
     );
   }
 }

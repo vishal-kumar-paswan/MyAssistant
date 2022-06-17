@@ -17,8 +17,11 @@ class OpenApplicationSection {
       }
     }
 
-    _packageName != ""
-        ? await DeviceApps.openApp(_packageName.toString())
-        : TextToSpeechModel.speakText("app is not installed on your phone");
+    if (_packageName != "") {
+      TextToSpeechModel.speakText("Opening $appName");
+      await DeviceApps.openApp(_packageName.toString());
+    } else {
+      TextToSpeechModel.speakText("app isn't installed on your phone");
+    }
   }
 }

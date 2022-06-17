@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -9,13 +10,23 @@ class DevelopmentTeamSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        leading: IconButton(
+          icon: const Icon(
+            CupertinoIcons.back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        backgroundColor: const Color(0xFFfdfbfb),
         centerTitle: true,
+        elevation: 0.0,
         title: const Text(
           'Development Team',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
       ),
@@ -51,7 +62,6 @@ class DevelopmentTeamSection extends StatelessWidget {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
-                fontWeight: FontWeight.w500,
               ),
             ),
             const SizedBox(
@@ -71,7 +81,7 @@ class DevelopmentTeamSection extends StatelessWidget {
             Transform.scale(
               scale: 4,
               child: const CircleAvatar(
-                backgroundImage: AssetImage('assets/dev-Vishal.JPG'),
+                backgroundImage: AssetImage('assets/dev-Vishal.jpg'),
               ),
             ),
             const SizedBox(
@@ -82,7 +92,6 @@ class DevelopmentTeamSection extends StatelessWidget {
               style: TextStyle(
                 fontSize: 25,
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(

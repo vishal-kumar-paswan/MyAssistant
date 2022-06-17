@@ -15,7 +15,6 @@ class FetchInstalledAppList {
         break;
       }
     }
-    print('package name : ' + _packageName!);
     return _packageName;
   }
 }

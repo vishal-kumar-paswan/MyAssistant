@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -9,7 +10,16 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        leading: IconButton(
+          icon: const Icon(
+            CupertinoIcons.back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        backgroundColor: const Color(0xFFfdfbfb),
+        elevation: 0.0,
       ),
       body: Container(
         height: double.infinity,

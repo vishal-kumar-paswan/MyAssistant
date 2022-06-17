@@ -20,6 +20,14 @@ class HowToUseSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            CupertinoIcons.back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           'How to use?',
           style: TextStyle(
@@ -29,8 +37,9 @@ class HowToUseSection extends StatelessWidget {
             fontFamily: GoogleFonts.nunito().fontFamily,
           ),
         ),
+        backgroundColor: const Color(0xFFfdfbfb),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        elevation: 0.0,
       ),
       body: Container(
         height: double.infinity,
@@ -45,7 +54,7 @@ class HowToUseSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'MyAssistant is a voice assistant app for managing all your daily tasks with ease.\nTap on the microphone button and speak any command to perform your tasks.',
+                'MyAssistant is a voice assistant app for managing all your daily tasks with ease. Tap on the microphone button and speak any command to perform your tasks.',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 21,

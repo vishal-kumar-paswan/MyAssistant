@@ -54,7 +54,6 @@ dependencies:
   speech_to_text: ^5.5.0
   sqflite: ^2.0.2
   url_launcher: ^6.0.20
-  wave: ^0.2.0
   weather: ^2.0.1
 
 dev_dependencies:
@@ -64,7 +63,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.3
 
 flutter_icons:
-  image_path: "assets/app_icon.png"
+  image_path: "assets/icon.png"
   android: true
   ios: true
 

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/screens/login_and_signup/signup.dart';
 import 'package:assistant/utils/global_context.dart';
-import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -88,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const CircleAvatar(
-                      radius: 30,
+                      radius: 35,
                       backgroundImage: AssetImage('assets/icon.png'),
                     ),
                     const SizedBox(
@@ -118,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'Makes your life simple.',
                       style: TextStyle(
                         fontSize: 13,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 54, 4, 172),
                       ),
                     ),
                     const SizedBox(

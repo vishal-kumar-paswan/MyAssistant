@@ -52,7 +52,7 @@ class AssistantOperations {
           (NavigationService.navigatorKey.currentContext)!, operation);
     }
 
-    //TODO: Debug query section
+    // Query section
     else if (operation.toLowerCase().startsWith('what is')) {
       Get.to(() => QuerySection(), arguments: [
         {
@@ -63,9 +63,9 @@ class AssistantOperations {
 
     // For sharing files
     else if (operation.toLowerCase().startsWith('share files')) {
-      Get.to(() => ShareFileSection());
+      Get.to(() => const ShareFileSection());
     } else if (operation.toLowerCase().startsWith('transfer files')) {
-      Get.to(() => ShareFileSection());
+      Get.to(() => const ShareFileSection());
     }
 
     // Play music
@@ -148,7 +148,7 @@ class AssistantOperations {
 
       switch (task) {
         case 'my share':
-          Get.to(() => ShareFileSection());
+          Get.to(() => const ShareFileSection());
           break;
         default:
           String? packageName =

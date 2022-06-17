@@ -79,7 +79,7 @@ class Assistant extends StatelessWidget {
         '/notesSection': (context) => const NotesSection(),
         '/remindersSection': (context) => const ReminderSection(),
         '/alarmSection': (context) => const AlarmClockSection(),
-        '/shareFileSection': (context) => ShareFileSection(),
+        '/shareFileSection': (context) => const ShareFileSection(),
         '/querySection': (context) => QuerySection(),
         '/settingsSection': (context) => const SettingsSection(),
         '/developementTeamSection': (context) => const DevelopmentTeamSection(),

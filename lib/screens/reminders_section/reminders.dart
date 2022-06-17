@@ -3,9 +3,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../constants.dart';
 
 showAlertDialog(BuildContext context, String title, String description) {
@@ -116,6 +114,22 @@ class _ReminderSectionState extends State<ReminderSection> {
     return Visibility(
       visible: setReminder,
       replacement: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0.0,
+          backgroundColor: const Color(0xFFfdfbfb),
+          leading: IconButton(
+            icon: const Icon(
+              CupertinoIcons.back,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/homepage", (Route<dynamic> route) => false);
+            },
+          ),
+        ),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -128,7 +142,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                   'Task Scheduled!',
                   style: TextStyle(
                     fontFamily: GoogleFonts.nunito().fontFamily,
-                    color: Colors.black,
+                    color: const Color.fromARGB(255, 85, 18, 241),
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                   ),
@@ -153,8 +167,8 @@ class _ReminderSectionState extends State<ReminderSection> {
                         'Back to Home',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          color: Colors.black,
-                          fontSize: 13,
+                          color: Colors.white,
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -167,7 +181,14 @@ class _ReminderSectionState extends State<ReminderSection> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: const Icon(
+              CupertinoIcons.back,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
           title: Text(
             'MyReminders',
             style: TextStyle(
@@ -177,8 +198,8 @@ class _ReminderSectionState extends State<ReminderSection> {
               fontSize: 24,
             ),
           ),
+          backgroundColor: const Color(0xFFfdfbfb),
           centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           elevation: 0,
         ),
         body: Container(
@@ -203,18 +224,18 @@ class _ReminderSectionState extends State<ReminderSection> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: GoogleFonts.nunito().fontFamily,
-                    color: Colors.black,
-                    fontSize: 16,
+                    color: Colors.white,
+                    fontSize: 18,
                   ),
                   decoration: InputDecoration(
                     hintText: 'Enter your task',
                     hintStyle: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontFamily: GoogleFonts.nunito().fontFamily,
                     ),
                     filled: true,
-                    fillColor: const Color.fromARGB(255, 33, 8, 120),
+                    fillColor: const Color.fromARGB(255, 110, 47, 255),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none,
@@ -233,7 +254,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                   hintStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
-                    fontSize: 16,
+                    fontSize: 20,
                   ),
                 ),
                 textAlign: TextAlign.center,
@@ -263,7 +284,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                   width: 125,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromARGB(255, 33, 8, 120),
+                    color: const Color.fromARGB(255, 85, 18, 241),
                   ),
                   child: Center(
                     child: Text(
@@ -271,7 +292,7 @@ class _ReminderSectionState extends State<ReminderSection> {
                       style: TextStyle(
                         fontFamily: GoogleFonts.nunito().fontFamily,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 15,
                       ),
                     ),

@@ -1,12 +1,10 @@
-import 'package:assistant/utils/global_context.dart';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:io';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../constants.dart';
 
 _asyncFileUpload(File file, BuildContext ctx) async {
@@ -23,10 +21,10 @@ _asyncFileUpload(File file, BuildContext ctx) async {
   var responseData = await response.stream.toBytes();
   var responseString = String.fromCharCodes(responseData);
   if (responseString != 'File uploaded') {
-    showAlertDialog(ctx, 'Oops!',
+    showAlertDialog(ctx, 'Oops! 😶',
         'An error occured while uploading, please check your internet connection and try again.');
   } else {
-    showAlertDialog(ctx, 'Yaay!', 'File uploaded.');
+    showAlertDialog(ctx, 'Yaay! 😄', 'File uploaded.');
   }
 }
 
@@ -73,6 +71,8 @@ showAlertDialog(BuildContext context, String title, String description) {
 }
 
 class ShareFileSection extends StatefulWidget {
+  const ShareFileSection({Key? key}) : super(key: key);
+
   @override
   State<ShareFileSection> createState() => _ShareFileSectionState();
 }
@@ -86,17 +86,26 @@ class _ShareFileSectionState extends State<ShareFileSection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: const Text(
-            'MyShare',
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
+        leading: IconButton(
+          icon: const Icon(
+            CupertinoIcons.back,
+            color: Colors.black,
+            size: 30,
           ),
-          elevation: 0.0,
-          backgroundColor: const Color.fromARGB(255, 0, 0, 0)),
+          onPressed: () => Navigator.pop(context),
+        ),
+        centerTitle: true,
+        title: const Text(
+          'MyShare',
+          style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        elevation: 0.0,
+        backgroundColor: const Color(0xFFfdfbfb),
+      ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -125,12 +134,19 @@ class _ShareFileSectionState extends State<ShareFileSection> {
                   fontFamily: GoogleFonts.nunito().fontFamily,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
-                  fontSize: 17,
+                  fontSize: 20,
                 ),
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 10,
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text('Cancel'),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             InkWell(
               onTap: (() {
@@ -151,7 +167,7 @@ class _ShareFileSectionState extends State<ShareFileSection> {
                     style: TextStyle(
                       fontFamily: GoogleFonts.nunito().fontFamily,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 15,
                     ),
                   ),

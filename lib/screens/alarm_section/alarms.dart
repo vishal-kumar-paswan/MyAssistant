@@ -1,5 +1,6 @@
 import 'package:assistant/utils/text_to_speech.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
@@ -35,6 +36,21 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
     return Visibility(
       visible: setAlarm,
       replacement: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0.0,
+          backgroundColor: const Color(0xFFfdfbfb),
+          leading: IconButton(
+              icon: const Icon(
+                CupertinoIcons.back,
+                color: Colors.black,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/homepage", (Route<dynamic> route) => false);
+              }),
+        ),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -47,7 +63,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                   'Alarm added for $hour:$minute',
                   style: TextStyle(
                     fontFamily: GoogleFonts.nunito().fontFamily,
-                    color: Colors.black,
+                    color: const Color.fromARGB(255, 85, 18, 241),
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                   ),
@@ -65,15 +81,15 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                     width: 140,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: const Color.fromARGB(255, 33, 8, 120),
+                      color: const Color.fromARGB(255, 85, 18, 241),
                     ),
                     child: Center(
                       child: Text(
                         'Back to Home',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          color: Colors.black,
-                          fontSize: 13,
+                          color: Colors.white,
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -87,8 +103,16 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-          automaticallyImplyLeading: false,
+          elevation: 0.0,
+          backgroundColor: const Color(0xFFfdfbfb),
+          leading: IconButton(
+            icon: const Icon(
+              CupertinoIcons.back,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
           title: Text(
             'MyAlarm',
             style: TextStyle(
@@ -113,13 +137,13 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                   hintStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
-                    fontSize: 20,
+                    fontSize: 22,
                   ),
                 ),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: GoogleFonts.nunito().fontFamily,
-                  color: Colors.black,
+                  color: const Color.fromARGB(255, 85, 18, 241),
                   fontSize: 30,
                 ),
                 type: DateTimePickerType.time,
@@ -143,7 +167,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                   width: 125,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromARGB(255, 33, 8, 120),
+                    color: const Color.fromARGB(255, 85, 18, 241),
                   ),
                   child: Center(
                     child: Text(
@@ -151,7 +175,7 @@ class _AlarmClockSectionState extends State<AlarmClockSection> {
                       style: TextStyle(
                         fontFamily: GoogleFonts.nunito().fontFamily,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 15,
                       ),
                     ),

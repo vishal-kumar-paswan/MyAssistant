@@ -19,9 +19,10 @@ class CallSection {
         () async {
           await FlutterPhoneDirectCaller.callNumber(
               (_contactDetails.contactNumber).toString());
-          TextToSpeechModel.speakText('Calling ${_contactDetails.contactName}');
         },
       );
+    } else if (_contactDetails.isContactFound == false) {
+      TextToSpeechModel.speakText("Contact not found");
     }
   }
 }

@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
 import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/utils/global_context.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../constants.dart';
-import '../../utils/text_to_speech.dart';
 
 Future<dynamic> signUpDetails(
     String _name, String _email, String _password) async {
@@ -83,7 +80,7 @@ class SignupScreen extends StatelessWidget {
                     const Text(
                       'Hey there,',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         fontWeight: FontWeight.w400,
                         fontSize: 26.0,
                       ),
@@ -91,7 +88,7 @@ class SignupScreen extends StatelessWidget {
                     const Text(
                       'Signup',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         fontWeight: FontWeight.w600,
                         fontSize: 30.0,
                       ),
@@ -101,15 +98,19 @@ class SignupScreen extends StatelessWidget {
                     ),
                     TextFormField(
                       controller: _nameController,
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 85, 18, 241),
+                      ),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.person,
-                          color: Colors.black,
+                          color: Color.fromARGB(255, 85, 18, 241),
                         ),
                         hintText: 'Name',
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 85, 18, 241),
+                        ),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) return "Name cannot be empty";
@@ -121,15 +122,19 @@ class SignupScreen extends StatelessWidget {
                     ),
                     TextFormField(
                       controller: _emailController,
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 85, 18, 241),
+                      ),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.mail,
-                          color: Colors.black,
+                          color: Color.fromARGB(255, 85, 18, 241),
                         ),
                         hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 85, 18, 241),
+                        ),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) return "Email cannot be empty";
@@ -142,15 +147,19 @@ class SignupScreen extends StatelessWidget {
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 85, 18, 241),
+                      ),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(
                           CupertinoIcons.lock_fill,
-                          color: Colors.black,
+                          color: Color.fromARGB(255, 85, 18, 241),
                         ),
                         hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 85, 18, 241),
+                        ),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -184,7 +193,7 @@ class SignupScreen extends StatelessWidget {
                             child: Text(
                               'Sign Up',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20,
                               ),
@@ -194,7 +203,7 @@ class SignupScreen extends StatelessWidget {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            color: const Color.fromARGB(255, 27, 3, 115),
+                            color: const Color.fromARGB(255, 85, 18, 241),
                           ),
                         ),
                       ),
