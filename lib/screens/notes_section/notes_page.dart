@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -48,16 +49,25 @@ class _NotesSectionState extends State<NotesSection> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              CupertinoIcons.back,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
           title: const Text(
             'MyNotes',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-          automaticallyImplyLeading: false,
+          elevation: 0.0,
+          backgroundColor: const Color(0xFFfdfbfb),
         ),
         body: Container(
           decoration: screenBackground,
@@ -77,7 +87,7 @@ class _NotesSectionState extends State<NotesSection> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: const Color.fromARGB(255, 85, 18, 241),
           child: const Icon(Icons.add),
           onPressed: () async {
             await Navigator.of(context).push(

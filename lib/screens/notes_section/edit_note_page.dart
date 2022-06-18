@@ -38,20 +38,25 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: const Icon(CupertinoIcons.back, color: Colors.black),
-            onPressed: () {},
+            icon: const Icon(
+              CupertinoIcons.back,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context),
           ),
           title: const Text(
-            'Add Note',
+            'Edit Note',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
+          backgroundColor: const Color(0xFFfdfbfb),
+          elevation: 0.0,
           centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         ),
         body: Container(
           height: double.infinity,
@@ -74,7 +79,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.redAccent,
+            backgroundColor: const Color.fromARGB(255, 85, 18, 241),
             onPressed: addOrUpdateNote,
             child: const Icon(
               Icons.save,

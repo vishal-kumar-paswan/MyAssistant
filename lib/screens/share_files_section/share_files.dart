@@ -4,69 +4,84 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+
+String fileName = 'Tap to select files';
+bool isFileSelected = false;
+late File file;
+FilePickerResult? result;
+late AnimationController shareFilesAnimationController;
 
 _asyncFileUpload(File file, BuildContext ctx) async {
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-  String _userId = sharedPreferences.get('userId').toString();
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile ||
+      connectivityResult == ConnectivityResult.wifi) {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String _userId = sharedPreferences.get('userId').toString();
 
-  String url = 'https://myassistantbackend.herokuapp.com/file?userId=$_userId';
+    String url =
+        'https://myassistantbackend.herokuapp.com/file?userId=$_userId';
 
-  var request = http.MultipartRequest("POST", Uri.parse(url));
-  var pic = await http.MultipartFile.fromPath("file_field", file.path);
-  request.files.add(pic);
-  var response = await request.send();
-  var responseData = await response.stream.toBytes();
-  var responseString = String.fromCharCodes(responseData);
-  if (responseString != 'File uploaded') {
-    showAlertDialog(ctx, 'Oops! 😶',
-        'An error occured while uploading, please check your internet connection and try again.');
+    var request = http.MultipartRequest("POST", Uri.parse(url));
+    var pic = await http.MultipartFile.fromPath("file_field", file.path);
+    request.files.add(pic);
+    var response = await request.send();
+    var responseData = await response.stream.toBytes();
+    var responseString = String.fromCharCodes(responseData);
+    if (responseString != 'File uploaded') {
+      showAlertDialog(
+        ctx,
+        'Error occured while uploading',
+        'assets/file_not_uploaded_animation.json',
+      );
+    } else {
+      showAlertDialog(
+        ctx,
+        'File uploaded',
+        'assets/file_uploaded_animation.json',
+      );
+    }
   } else {
-    showAlertDialog(ctx, 'Yaay! 😄', 'File uploaded.');
+    showAlertDialog(ctx, 'Please check your internet connection and try again',
+        'assets/no_internet_animation.json');
   }
 }
 
-showAlertDialog(BuildContext context, String title, String description) {
-  Widget okButton = TextButton(
-    child: const Text(
-      "OK",
-      style: TextStyle(
-        fontSize: 15,
-      ),
-    ),
-    onPressed: () => Navigator.pop(context),
-  );
-
-  AlertDialog alert = AlertDialog(
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(20.0),
-      ),
-    ),
-    title: Text(
-      title,
-      style: const TextStyle(
-        fontSize: 20,
-      ),
-    ),
-    content: Text(
-      description,
-      style: const TextStyle(
-        fontSize: 15,
-      ),
-    ),
-    actions: [
-      okButton,
-    ],
-  );
-
+showAlertDialog(
+    BuildContext context, String description, String animationPath) {
   showDialog(
     context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
+    builder: (BuildContext context) => Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Lottie.asset(
+              animationPath,
+              repeat: false,
+              controller: shareFilesAnimationController,
+              onLoaded: (composition) {
+                shareFilesAnimationController.duration = composition.duration;
+                shareFilesAnimationController.forward();
+              },
+            ),
+            Text(description,
+                style: const TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center)
+          ],
+        ),
+      ),
+    ),
   );
 }
 
@@ -77,10 +92,26 @@ class ShareFileSection extends StatefulWidget {
   State<ShareFileSection> createState() => _ShareFileSectionState();
 }
 
-class _ShareFileSectionState extends State<ShareFileSection> {
-  String fileName = 'No files selected';
-  late File file;
-  FilePickerResult? result;
+class _ShareFileSectionState extends State<ShareFileSection>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+    shareFilesAnimationController = AnimationController(vsync: this);
+
+    shareFilesAnimationController.addStatusListener((status) async {
+      if (status == AnimationStatus.completed) {
+        Navigator.pop(context);
+        shareFilesAnimationController.reset();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    shareFilesAnimationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +151,12 @@ class _ShareFileSectionState extends State<ShareFileSection> {
                 if (result != null) {
                   setState(() {
                     fileName = result!.files.first.name;
+                    isFileSelected = true;
                   });
                   file = File(result!.files.single.path.toString());
                 } else {
                   setState(() {
-                    fileName = 'No files selected';
+                    fileName = 'Tap to select files';
                   });
                 }
               },
@@ -138,15 +170,21 @@ class _ShareFileSectionState extends State<ShareFileSection> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const Text('Cancel'),
-            ),
-            const SizedBox(
-              height: 10,
+            Visibility(
+              visible: isFileSelected,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    fileName = 'Tap to select files';
+                    result = null;
+                    isFileSelected = false;
+                  });
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
             ),
             InkWell(
               onTap: (() {
@@ -159,7 +197,7 @@ class _ShareFileSectionState extends State<ShareFileSection> {
                 width: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(255, 33, 8, 120),
+                  color: const Color.fromARGB(255, 85, 18, 241),
                 ),
                 child: Center(
                   child: Text(

@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_text_kit: ^4.2.1
+  connectivity_plus: ^2.3.4
   cupertino_icons: ^1.0.2
   date_time_picker: ^2.1.0
   device_apps: ^2.1.1
@@ -57,10 +58,10 @@ dependencies:
   weather: ^2.0.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.9.3
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.3
 
 flutter_icons:
   image_path: "assets/icon.png"

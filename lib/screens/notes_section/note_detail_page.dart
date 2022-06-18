@@ -42,16 +42,22 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Edit note',
+            'Your Note',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          elevation: 0.0,
+          backgroundColor: const Color(0xFFfdfbfb),
           leading: IconButton(
-            icon: const Icon(CupertinoIcons.back),
+            icon: const Icon(
+              CupertinoIcons.back,
+              color: Colors.black,
+              size: 30,
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           actions: [editButton(), deleteButton()],
@@ -69,20 +75,25 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                         note.title,
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 24,
+                          fontSize: 26,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         DateFormat.yMMMd().format(note.createdTime),
-                        style: const TextStyle(color: Colors.black),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         note.description,
                         style: const TextStyle(
-                            color: Colors.black, fontSize: 20),
+                          color: Colors.black,
+                          fontSize: 22,
+                        ),
                       )
                     ],
                   ),
@@ -91,7 +102,10 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       );
 
   Widget editButton() => IconButton(
-      icon: const Icon(Icons.edit_outlined),
+      icon: const Icon(
+        Icons.edit,
+        color: Color.fromARGB(255, 85, 18, 241),
+      ),
       onPressed: () async {
         if (isLoading) return;
 
@@ -103,7 +117,10 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       });
 
   Widget deleteButton() => IconButton(
-        icon: const Icon(Icons.delete),
+        icon: const Icon(
+          Icons.delete,
+          color: Colors.redAccent,
+        ),
         onPressed: () async {
           await NotesDatabase.instance.delete(widget.noteId);
 

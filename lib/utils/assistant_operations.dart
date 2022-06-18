@@ -10,6 +10,7 @@ import 'package:assistant/utils/play_music.dart';
 import 'package:assistant/utils/send_sms.dart';
 import 'package:assistant/utils/text_to_speech.dart';
 import 'package:device_apps/device_apps.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../screens/notes_section/notes_page.dart';
 import 'global_context.dart';

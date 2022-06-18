@@ -19,9 +19,9 @@ class NoteCardWidget extends StatelessWidget {
     final time = DateFormat.yMMMd().format(note.createdTime);
 
     return Card(
-      color: const Color.fromARGB(255, 33, 8, 120),
+      color: const Color.fromARGB(255, 85, 18, 241),
       child: Container(
-        height: 100,
+        height: 110,
         width: double.infinity,
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -32,25 +32,26 @@ class NoteCardWidget extends StatelessWidget {
             Text(
               note.title,
               style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20,
+                overflow: TextOverflow.ellipsis,
+                color: Colors.white,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 3),
             Text(
               note.description,
               style: const TextStyle(
-                color: Colors.black,
+                overflow: TextOverflow.ellipsis,
+                color: Colors.white,
                 fontSize: 20,
-                // fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               time,
               style: const TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 12,
               ),
             ),

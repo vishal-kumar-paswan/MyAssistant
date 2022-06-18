@@ -62,7 +62,7 @@ class AboutSection extends StatelessWidget {
               'Version 1.0',
               style: TextStyle(
                 fontSize: 15,
-                color: Color.fromARGB(255, 33, 145, 243),
+                color: Color.fromARGB(255, 85, 18, 241),
                 fontWeight: FontWeight.bold,
               ),
             )
