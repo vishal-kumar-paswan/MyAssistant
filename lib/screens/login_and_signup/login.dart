@@ -202,10 +202,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          SystemChannels.textInput
-                              .invokeMethod('TextInput.hide');
                           fetchLoginDetails(
                               userIdController.text, passwordController.text);
+                          SystemChannels.textInput
+                              .invokeMethod('TextInput.hide');
                         },
                         child: AnimatedContainer(
                           duration: const Duration(seconds: 1),

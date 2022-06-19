@@ -1,8 +1,10 @@
+import 'package:assistant/screens/homepage.dart';
 import 'package:assistant/utils/text_to_speech.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import '../../constants.dart';
@@ -56,7 +58,7 @@ class _ReminderSectionState extends State<ReminderSection>
     with SingleTickerProviderStateMixin {
   late String taskName;
   late int hour, minute;
-  late String time;
+  String time = '';
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   bool setReminder = true;
@@ -96,32 +98,34 @@ class _ReminderSectionState extends State<ReminderSection>
   }
 
   Future _showNotification() async {
-    if (_taskKey.currentState!.validate()) {
-      setState(() {
-        setReminder = false;
-      });
-      const androidDetails = AndroidNotificationDetails(
-        "MyAssistant ID",
-        "MyAssistant",
-        importance: Importance.max,
-      );
-      const iOSDetails = IOSNotificationDetails();
-      const generalNotificationDetails =
-          NotificationDetails(android: androidDetails, iOS: iOSDetails);
+    if (time != '') {
+      if (_taskKey.currentState!.validate()) {
+        setState(() {
+          setReminder = false;
+        });
+        const androidDetails = AndroidNotificationDetails(
+          "MyAssistant ID",
+          "MyAssistant",
+          importance: Importance.max,
+        );
+        const iOSDetails = IOSNotificationDetails();
+        const generalNotificationDetails =
+            NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
-      var scheduledTime = DateTime.parse(time);
+        var scheduledTime = DateTime.parse(time);
 
-      // ignore: deprecated_member_use
-      flutterLocalNotificationsPlugin.schedule(
-        0,
-        taskName,
-        "Get your task done!",
-        scheduledTime,
-        generalNotificationDetails,
-      );
-      TextToSpeechModel.speakText('Reminder added');
-      showAlertDialog(
-          context, 'Reminder added', 'assets/reminder_added_animation.json');
+        // ignore: deprecated_member_use
+        flutterLocalNotificationsPlugin.schedule(
+          0,
+          taskName,
+          "Get your task done!",
+          scheduledTime,
+          generalNotificationDetails,
+        );
+        TextToSpeechModel.speakText('Reminder added');
+        showAlertDialog(
+            context, 'Reminder added', 'assets/reminder_added_animation.json');
+      }
     }
   }
 
@@ -254,8 +258,6 @@ class _ReminderSectionState extends State<ReminderSection>
   }
 
   Future notificationSelected(String? payload) async {
-    setState(() {
-      setReminder = true;
-    });
+    Get.offAll(() => const HomepageScreen());
   }
 }

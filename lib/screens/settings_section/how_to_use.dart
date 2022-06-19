@@ -2,14 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../constants.dart';
 
-//TODO: Add the open other app how to use
-
 void _launchDesktopSite() async {
-  if (await canLaunch('https://mywebassistant.herokuapp.com')) {
-    await launch('https://mywebassistant.herokuapp.com');
+  if (await canLaunch('https://myassistantweb.netlify.app/')) {
+    await launch('https://myassistantweb.netlify.app/');
   }
 }
 
@@ -70,7 +67,7 @@ class HowToUseSection extends StatelessWidget {
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.phone,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -84,7 +81,7 @@ class HowToUseSection extends StatelessWidget {
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.mail,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -98,7 +95,7 @@ class HowToUseSection extends StatelessWidget {
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.music_note_2,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -111,8 +108,22 @@ class HowToUseSection extends StatelessWidget {
                     ),
                     const ListTile(
                       leading: Icon(
+                        CupertinoIcons.thermometer_sun,
+                        color: Color.fromARGB(255, 85, 18, 241),
+                        size: 30,
+                      ),
+                      title: Text(
+                        'Say "How\'s the weather" to get weather details of your location.',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const ListTile(
+                      leading: Icon(
                         CupertinoIcons.pen,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -126,7 +137,7 @@ class HowToUseSection extends StatelessWidget {
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.pencil_ellipsis_rectangle,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -140,7 +151,7 @@ class HowToUseSection extends StatelessWidget {
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.bell,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -154,7 +165,7 @@ class HowToUseSection extends StatelessWidget {
                     const ListTile(
                       leading: Icon(
                         CupertinoIcons.alarm,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -167,8 +178,22 @@ class HowToUseSection extends StatelessWidget {
                     ),
                     const ListTile(
                       leading: Icon(
+                        CupertinoIcons.search,
+                        color: Color.fromARGB(255, 85, 18, 241),
+                        size: 30,
+                      ),
+                      title: Text(
+                        'Say "Who is PersonName" or "Where is LocationName" or "How to YourDoubt" search any of your queries.',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const ListTile(
+                      leading: Icon(
                         CupertinoIcons.arrow_right_square,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: Text(
@@ -182,7 +207,7 @@ class HowToUseSection extends StatelessWidget {
                     ListTile(
                       leading: const Icon(
                         CupertinoIcons.share,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 85, 18, 241),
                         size: 30,
                       ),
                       title: const Text(
@@ -205,7 +230,7 @@ class HowToUseSection extends StatelessWidget {
                           InkWell(
                             onTap: _launchDesktopSite,
                             child: Text(
-                              'https://mywebassistant.herokuapp.com',
+                              'https://myassistantweb.netlify.app/',
                               style: TextStyle(
                                 color: Colors.blue.shade600,
                                 // fontSize: 20,

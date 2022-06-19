@@ -15,7 +15,7 @@ late File file;
 FilePickerResult? result;
 late AnimationController shareFilesAnimationController;
 
-_asyncFileUpload(File file, BuildContext ctx) async {
+Future<void> _asyncFileUpload(File file, BuildContext ctx) async {
   var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.mobile ||
       connectivityResult == ConnectivityResult.wifi) {
@@ -189,7 +189,13 @@ class _ShareFileSectionState extends State<ShareFileSection>
             InkWell(
               onTap: (() {
                 if (result != null) {
-                  _asyncFileUpload(file, context);
+                  _asyncFileUpload(file, context).whenComplete(() {
+                    setState(() {
+                      fileName = 'Tap to select files';
+                      isFileSelected = false;
+                      result = null;
+                    });
+                  });
                 }
               }),
               child: Container(

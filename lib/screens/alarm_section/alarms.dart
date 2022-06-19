@@ -55,7 +55,7 @@ class AlarmClockSection extends StatefulWidget {
 
 class _AlarmClockSectionState extends State<AlarmClockSection>
     with SingleTickerProviderStateMixin {
-  late String time;
+  String time = '';
   late int hour = 0, minute = 0;
 
   @override
@@ -82,12 +82,15 @@ class _AlarmClockSectionState extends State<AlarmClockSection>
   }
 
   void _setAlarm() {
-    hour = int.parse(time.substring(time.indexOf(' ') + 1, time.indexOf(':')));
-    minute = int.parse(time.substring(time.indexOf(':') + 1));
-    FlutterAlarmClock.createAlarm(hour, minute);
-    showAlertDialog(context, 'Alarm added', 'assets/alarm_animation.json');
-    TextToSpeechModel.speakText(
-        'Alarm added for $hour hours and $minute minutes');
+    if (time != '') {
+      hour =
+          int.parse(time.substring(time.indexOf(' ') + 1, time.indexOf(':')));
+      minute = int.parse(time.substring(time.indexOf(':') + 1));
+      FlutterAlarmClock.createAlarm(hour, minute);
+      showAlertDialog(context, 'Alarm added', 'assets/alarm_animation.json');
+      TextToSpeechModel.speakText(
+          'Alarm added for $hour hours and $minute minutes');
+    }
   }
 
   @override

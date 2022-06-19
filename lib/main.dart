@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:assistant/screens/alarm_section/alarms.dart';
 import 'package:assistant/screens/query_page/query_result.dart';
 import 'package:assistant/screens/settings_section/development_team.dart';
@@ -20,29 +18,6 @@ import 'screens/reminders_section/reminders.dart';
 import 'screens/settings_section/about.dart';
 import 'screens/settings_section/settings.dart';
 
-Future<void> checkIfAllPermissionsAreAllowed() async {
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-  bool bluetoothPermission = await Permission.bluetooth.status.isDenied;
-  bool bluetoothConnectPermission =
-      await Permission.bluetoothConnect.status.isDenied;
-  bool contactsPermission = await Permission.contacts.status.isDenied;
-  bool microphonePermission = await Permission.microphone.status.isDenied;
-  bool smsPermission = await Permission.sms.status.isDenied;
-  bool phonePermission = await Permission.phone.status.isDenied;
-  bool locationPermission = await Permission.location.status.isDenied;
-
-  bluetoothPermission &&
-          bluetoothConnectPermission &&
-          contactsPermission &&
-          smsPermission &&
-          microphonePermission &&
-          phonePermission &&
-          locationPermission
-      ? sharedPreferences.setBool('allPermissionsAllowed', true)
-      : sharedPreferences.setBool('allPermissionsAllowed', false);
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await [
@@ -50,13 +25,12 @@ void main() async {
     Permission.bluetoothConnect,
     Permission.contacts,
     Permission.microphone,
+    Permission.storage,
     Permission.sms,
     Permission.phone,
     Permission.location,
   ].request().whenComplete(() {
-    checkIfAllPermissionsAreAllowed().whenComplete(
-      () => runApp(const Assistant()),
-    );
+    runApp(const Assistant());
   });
 }
 

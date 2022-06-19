@@ -91,6 +91,7 @@ class DevelopmentTeamSection extends StatelessWidget {
               'Vishal Kumar Paswan',
               style: TextStyle(
                 fontSize: 25,
+                fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),

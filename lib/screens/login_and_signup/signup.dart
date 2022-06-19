@@ -179,13 +179,13 @@ class SignupScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          SystemChannels.textInput
-                              .invokeMethod('TextInput.hide');
                           signUpDetails(
                             _nameController.text,
                             _emailController.text,
                             _passwordController.text,
                           );
+                          SystemChannels.textInput
+                              .invokeMethod('TextInput.hide');
                         },
                         child: AnimatedContainer(
                           duration: const Duration(seconds: 1),

@@ -12,11 +12,18 @@ import 'package:assistant/utils/text_to_speech.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../screens/notes_section/notes_page.dart';
 import 'global_context.dart';
 
 class AssistantOperations {
   static void selectTask(String operation) async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    int? temperature = sharedPreferences.getInt('temperature');
+    String? location = sharedPreferences.getString('location');
+
     // For greetings
     if (operation.toLowerCase().compareTo('good morning') == 0) {
       TextToSpeechModel.speakText('Good morning');
@@ -30,7 +37,12 @@ class AssistantOperations {
 
     // Weather details
     if (operation.toLowerCase().compareTo('how is the weather') == 0) {
-    } else if (operation.toLowerCase().compareTo('how\'s the weather') == 0) {}
+      TextToSpeechModel.speakText(
+          'It\'s $temperature degree celsius at $location');
+    } else if (operation.toLowerCase().compareTo('how\'s the weather') == 0) {
+      TextToSpeechModel.speakText(
+          'It\'s $temperature degree celsius at $location');
+    }
 
     // For calling
     if (operation.toLowerCase().startsWith('call')) {
@@ -38,7 +50,7 @@ class AssistantOperations {
       CallSection.makeACall(contactName);
     }
 
-    // For sending SMS - 1
+    // For sending SMS
     else if (operation.toLowerCase().startsWith('send a message to')) {
       SendSMS.sendMessage(
           (NavigationService.navigatorKey.currentContext)!, operation);
@@ -54,18 +66,23 @@ class AssistantOperations {
     }
 
     // Query section
-    else if (operation.toLowerCase().startsWith('what is')) {
-      Get.to(() => QuerySection(), arguments: [
-        {
-          "query": operation.substring(operation.lastIndexOf(' ') + 1),
-        },
-      ]);
+    else if (operation.toLowerCase().startsWith('what is') ||
+        operation.toLowerCase().startsWith('who is') ||
+        operation.toLowerCase().startsWith('how to') ||
+        operation.toLowerCase().startsWith('where is')) {
+      String encodedOperation = operation.replaceAll(' ', '+');
+      TextToSpeechModel.speakText('Showing results for $operation');
+      await launch('https://www.google.com/search?q=$encodedOperation');
     }
 
     // For sharing files
     else if (operation.toLowerCase().startsWith('share files')) {
       Get.to(() => const ShareFileSection());
     } else if (operation.toLowerCase().startsWith('transfer files')) {
+      Get.to(() => const ShareFileSection());
+    } else if (operation.toLowerCase().startsWith('share file')) {
+      Get.to(() => const ShareFileSection());
+    } else if (operation.toLowerCase().startsWith('transfer file')) {
       Get.to(() => const ShareFileSection());
     }
 
@@ -114,6 +131,12 @@ class AssistantOperations {
     } else if (operation.toLowerCase().compareTo('add note') == 0) {
       Get.to(() => const AddEditNotePage());
     } else if (operation.toLowerCase().compareTo('add a note') == 0) {
+      Get.to(() => const AddEditNotePage());
+    } else if (operation.toLowerCase().compareTo('edit notes') == 0) {
+      Get.to(() => const AddEditNotePage());
+    } else if (operation.toLowerCase().compareTo('edit note') == 0) {
+      Get.to(() => const AddEditNotePage());
+    } else if (operation.toLowerCase().compareTo('edit a note') == 0) {
       Get.to(() => const AddEditNotePage());
     }
 
