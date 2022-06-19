@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:assistant/utils/text_to_speech.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -33,12 +34,15 @@ Future<void> _asyncFileUpload(File file, BuildContext ctx) async {
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
     if (responseString != 'File uploaded') {
+      TextToSpeechModel.speakText('An error occured while uploading');
       showAlertDialog(
         ctx,
         'Error occured while uploading',
         'assets/file_not_uploaded_animation.json',
       );
     } else {
+      TextToSpeechModel.speakText('File uploaded');
+
       showAlertDialog(
         ctx,
         'File uploaded',
@@ -46,6 +50,8 @@ Future<void> _asyncFileUpload(File file, BuildContext ctx) async {
       );
     }
   } else {
+    TextToSpeechModel.speakText(
+        'Please check your internet connection and try again');
     showAlertDialog(ctx, 'Please check your internet connection and try again',
         'assets/no_internet_animation.json');
   }
