@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
+import '../../utils/text_to_speech.dart';
 
 Future<dynamic> signUpDetails(
     String _name, String _email, String _password) async {
@@ -34,8 +35,8 @@ Future<dynamic> signUpDetails(
       sharedPreferences.setString('email', _email);
       sharedPreferences.setString('userId', decodedJson['code']);
       sharedPreferences.setString('name', decodedJson['name']);
+      TextToSpeechModel.speakText('Welcome to my assistant');
       Get.to(const HomepageScreen());
-      // TextToSpeechModel.speakText('Welcome to my assistant');
       break;
     case 205:
       const snackBar = SnackBar(

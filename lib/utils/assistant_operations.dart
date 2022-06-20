@@ -40,6 +40,9 @@ class AssistantOperations {
     } else if (operation.toLowerCase().compareTo('how\'s the weather') == 0) {
       TextToSpeechModel.speakText(
           'It\'s $temperature degree celsius at $location');
+    } else if (operation.toLowerCase().compareTo('weather in ') == 0) {
+      TextToSpeechModel.speakText(
+          'It\'s $temperature degree celsius at $location');
     }
 
     // For calling
@@ -122,7 +125,38 @@ class AssistantOperations {
       if (isAuthenticated) {
         Get.to(() => const NotesSection());
       }
+    } else if (operation.toLowerCase().compareTo('open my notes') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('open my note') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('view my notes') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('view my note') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('browse my notes') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
+    } else if (operation.toLowerCase().compareTo('browse my note') == 0) {
+      final isAuthenticated = await LocalAuthenticationAPI.authenticate();
+      if (isAuthenticated) {
+        Get.to(() => const NotesSection());
+      }
     }
+
     // Add notes
     else if (operation.toLowerCase().compareTo('add notes') == 0) {
       Get.to(() => const AddEditNotePage());
@@ -175,8 +209,13 @@ class AssistantOperations {
         default:
           String? packageName =
               await FetchInstalledAppList.getPackageName(task);
-          await DeviceApps.openApp(packageName.toString());
-          TextToSpeechModel.speakText('Opening $task');
+          if (packageName != null) {
+            TextToSpeechModel.speakText('Opening $task');
+            await DeviceApps.openApp(packageName.toString());
+          } else {
+            TextToSpeechModel.speakText('App is not installed');
+          }
+          break;
       }
     }
   }
