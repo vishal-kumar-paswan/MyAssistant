@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../constants.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -20,6 +21,7 @@ Future<void> _asyncFileUpload(File file, BuildContext ctx) async {
   var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.mobile ||
       connectivityResult == ConnectivityResult.wifi) {
+    showUploadingAlertDialog(ctx);
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String _userId = sharedPreferences.get('userId').toString();
@@ -28,25 +30,25 @@ Future<void> _asyncFileUpload(File file, BuildContext ctx) async {
         'https://myassistantbackend.herokuapp.com/file?userId=$_userId';
 
     var request = http.MultipartRequest("POST", Uri.parse(url));
-    var pic = await http.MultipartFile.fromPath("file_field", file.path);
-    request.files.add(pic);
+    var uploadFile = await http.MultipartFile.fromPath("file_field", file.path);
+    request.files.add(uploadFile);
     var response = await request.send();
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
-    if (responseString != 'File uploaded') {
+    Navigator.pop(ctx);
+    if (responseString == 'File uploaded') {
+      TextToSpeechModel.speakText('File uploaded');
+      showAlertDialog(
+        ctx,
+        'File uploaded',
+        'assets/file_uploaded_animation.json',
+      );
+    } else {
       TextToSpeechModel.speakText('An error occured while uploading');
       showAlertDialog(
         ctx,
         'Error occured while uploading',
         'assets/file_not_uploaded_animation.json',
-      );
-    } else {
-      TextToSpeechModel.speakText('File uploaded');
-
-      showAlertDialog(
-        ctx,
-        'File uploaded',
-        'assets/file_uploaded_animation.json',
       );
     }
   } else {
@@ -55,6 +57,37 @@ Future<void> _asyncFileUpload(File file, BuildContext ctx) async {
     showAlertDialog(ctx, 'Please check your internet connection and try again',
         'assets/no_internet_animation.json');
   }
+}
+
+
+showUploadingAlertDialog(BuildContext ctx) {
+  showDialog(
+    context: ctx,
+    builder: (BuildContext context) => Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Lottie.asset(
+              'assets/uploading_animation.json',
+              repeat: true,
+            ),
+            const Text(
+              'Uploading file',
+              style: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 showAlertDialog(

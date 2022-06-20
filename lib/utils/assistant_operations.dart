@@ -19,31 +19,20 @@ class AssistantOperations {
   static void selectTask(String operation) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    int? temperature = sharedPreferences.getInt('temperature');
-    String? location = sharedPreferences.getString('location');
+    String? userName = sharedPreferences.getString('name');
 
     // For greetings
     if (operation.toLowerCase().compareTo('good morning') == 0) {
-      TextToSpeechModel.speakText('Good morning');
+      TextToSpeechModel.speakText('Good morning $userName');
     } else if (operation.toLowerCase().compareTo('good afternoon') == 0) {
-      TextToSpeechModel.speakText('Good afternoon');
+      TextToSpeechModel.speakText('Good afternoon $userName');
     } else if (operation.toLowerCase().compareTo('good evening') == 0) {
-      TextToSpeechModel.speakText('Good evening');
+      TextToSpeechModel.speakText('Good evening $userName');
     } else if (operation.toLowerCase().compareTo('good night') == 0) {
-      TextToSpeechModel.speakText('Good night');
+      TextToSpeechModel.speakText('Good night $userName');
     }
 
     // Weather details
-    if (operation.toLowerCase().compareTo('how is the weather') == 0) {
-      TextToSpeechModel.speakText(
-          'It\'s $temperature degree celsius at $location');
-    } else if (operation.toLowerCase().compareTo('how\'s the weather') == 0) {
-      TextToSpeechModel.speakText(
-          'It\'s $temperature degree celsius at $location');
-    } else if (operation.toLowerCase().compareTo('weather in ') == 0) {
-      TextToSpeechModel.speakText(
-          'It\'s $temperature degree celsius at $location');
-    }
 
     // For calling
     if (operation.toLowerCase().startsWith('call')) {
@@ -70,7 +59,10 @@ class AssistantOperations {
     else if (operation.toLowerCase().startsWith('what is') ||
         operation.toLowerCase().startsWith('who is') ||
         operation.toLowerCase().startsWith('how to') ||
-        operation.toLowerCase().startsWith('where is')) {
+        operation.toLowerCase().startsWith('where is') ||
+        operation.toLowerCase().startsWith('how is the weather ') ||
+        operation.toLowerCase().startsWith('how\'s the weather ') ||
+        operation.toLowerCase().startsWith('weather in ')) {
       String encodedOperation = operation.replaceAll(' ', '+');
       TextToSpeechModel.speakText('Showing results for $operation');
       await launch('https://www.google.com/search?q=$encodedOperation');
