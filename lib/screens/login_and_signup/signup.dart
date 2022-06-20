@@ -184,8 +184,6 @@ class SignupScreen extends StatelessWidget {
                             _emailController.text,
                             _passwordController.text,
                           );
-                          SystemChannels.textInput
-                              .invokeMethod('TextInput.hide');
                         },
                         child: AnimatedContainer(
                           duration: const Duration(seconds: 1),
@@ -219,7 +217,11 @@ class SignupScreen extends StatelessWidget {
                           style: TextStyle(color: Colors.black),
                         ),
                         TextButton(
-                          onPressed: () => Get.toNamed('/login'),
+                          onPressed: () {
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
+                            Get.toNamed('/login');
+                          },
                           child: const Text('Login'),
                         )
                       ],

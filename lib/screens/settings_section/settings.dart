@@ -180,15 +180,37 @@ class _SettingsSectionState extends State<SettingsSection> {
                 child: SizedBox(),
                 flex: 1,
               ),
-              const Center(
-                child: Text(
-                  'Made with ❤️ using Flutter and Next.js',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15.5,
-                    // fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Made with ❤️ using  ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15.5,
+                        // fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Image.asset(
+                      'assets/techstack_flutter.png',
+                      width: 80,
+                    ),
+                    const Text(
+                      ' and ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15.5,
+                        // fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Image.asset(
+                      'assets/techstack_express.png',
+                      width: 75,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(

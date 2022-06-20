@@ -4,8 +4,9 @@ class FetchInstalledAppList {
   static Future<String?> getPackageName(String appName) async {
     late List<Application> installedApps;
     String? _packageName;
-    installedApps =
-        await DeviceApps.getInstalledApplications(includeSystemApps: true);
+    installedApps = await DeviceApps.getInstalledApplications(
+      includeSystemApps: true,
+    );
     for (int i = 0; i < installedApps.length; i++) {
       if (appName
               .toLowerCase()

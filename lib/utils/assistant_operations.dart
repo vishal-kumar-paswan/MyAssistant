@@ -1,6 +1,5 @@
 import 'package:assistant/screens/alarm_section/alarms.dart';
 import 'package:assistant/screens/notes_section/edit_note_page.dart';
-import 'package:assistant/screens/query_page/query_result.dart';
 import 'package:assistant/screens/reminders_section/reminders.dart';
 import 'package:assistant/screens/share_files_section/share_files.dart';
 import 'package:assistant/utils/call_section.dart';
@@ -10,7 +9,6 @@ import 'package:assistant/utils/play_music.dart';
 import 'package:assistant/utils/send_sms.dart';
 import 'package:assistant/utils/text_to_speech.dart';
 import 'package:device_apps/device_apps.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';

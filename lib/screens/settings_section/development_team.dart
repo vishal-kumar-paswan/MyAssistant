@@ -40,7 +40,7 @@ class DevelopmentTeamSection extends StatelessWidget {
             Transform.scale(
               scale: 4,
               child: const CircleAvatar(
-                backgroundImage: AssetImage('assets/dev-Soumyaneel.jpeg'),
+                backgroundImage: AssetImage('assets/dev_Soumyaneel.jpeg'),
               ),
             ),
             const SizedBox(
@@ -81,7 +81,7 @@ class DevelopmentTeamSection extends StatelessWidget {
             Transform.scale(
               scale: 4,
               child: const CircleAvatar(
-                backgroundImage: AssetImage('assets/dev-Vishal.jpg'),
+                backgroundImage: AssetImage('assets/dev_Vishal.jpg'),
               ),
             ),
             const SizedBox(

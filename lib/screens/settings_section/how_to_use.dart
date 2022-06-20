@@ -227,13 +227,17 @@ class HowToUseSection extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          InkWell(
-                            onTap: _launchDesktopSite,
-                            child: Text(
-                              'https://myassistantweb.netlify.app/',
-                              style: TextStyle(
-                                color: Colors.blue.shade600,
-                                // fontSize: 20,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: InkWell(
+                              onTap: _launchDesktopSite,
+                              child: Text(
+                                'https://myassistantweb.netlify.app/',
+                                style: TextStyle(
+                                  color: Colors.blue.shade600,
+                                  fontSize: 15,
+                                  // fontSize: 20,
+                                ),
                               ),
                             ),
                           ),

@@ -4,6 +4,7 @@ import 'package:assistant/screens/settings_section/settings.dart';
 import 'package:assistant/utils/assistant_operations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,6 +51,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   @override
   void initState() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     setName().whenComplete(() {
       getLatitudeAndLongitude().whenComplete(() {
         fetchWeatherData().whenComplete(() {
@@ -246,6 +248,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

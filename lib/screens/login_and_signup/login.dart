@@ -204,8 +204,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           fetchLoginDetails(
                               userIdController.text, passwordController.text);
-                          SystemChannels.textInput
-                              .invokeMethod('TextInput.hide');
                         },
                         child: AnimatedContainer(
                           duration: const Duration(seconds: 1),
