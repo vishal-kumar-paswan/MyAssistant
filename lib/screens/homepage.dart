@@ -21,7 +21,7 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
-  final WeatherFactory wf = WeatherFactory('6d7b8aa0f6a34dd44744f2dc19f95b2f');
+  final WeatherFactory wf = WeatherFactory('YOUR OpenWeather API KEY');
   double? latitude;
   double? longitude;
   final stt.SpeechToText _speechToText = stt.SpeechToText();
